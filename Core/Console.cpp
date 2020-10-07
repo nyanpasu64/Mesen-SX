@@ -561,6 +561,25 @@ double Console::GetFrameDelay()
 	return frameDelay;
 }
 
+HistoryViewer* Console::GetHistoryViewer()
+{
+	return _historyViewer.get();
+}
+
+void Console::CopyRewindData(shared_ptr<Console> sourceConsole)
+{
+	sourceConsole->Pause();
+	Pause();
+
+	//Disable battery saving for this instance
+	_batteryManager->SetSaveEnabled(false);
+	_historyViewer.reset(new HistoryViewer(shared_from_this()));
+	sourceConsole->GetRewindManager()->CopyHistory(_historyViewer);
+
+	Resume();
+	sourceConsole->Resume();
+}
+
 void Console::PauseOnNextFrame()
 {
 	shared_ptr<Debugger> debugger = _debugger;
