@@ -14,9 +14,7 @@ namespace Mesen.GUI.Forms
 {
 	public partial class frmHistoryViewer : BaseForm
 	{
-		private Thread _emuThread;
 		private bool _paused = true;
-		private bool _isNsf = false;
 
 		public frmHistoryViewer()
 		{
@@ -29,9 +27,8 @@ namespace Mesen.GUI.Forms
 
 			RestoreLocation(ConfigManager.Config.HistoryViewer.WindowLocation, ConfigManager.Config.HistoryViewer.WindowSize);
 
-			_isNsf = false; // InteropEmu.IsNsf();
-			tlpRenderer.Visible = !_isNsf;
-			picNsfIcon.Visible = _isNsf;
+			tlpRenderer.Visible = true;
+			picNsfIcon.Visible = false;
 		}
 
 		protected override void OnClosed(EventArgs e)
@@ -88,7 +85,7 @@ namespace Mesen.GUI.Forms
 
 		private void SetScale(int scale)
 		{
-			ScreenSize size = EmuApi.GetScreenSize(true);
+			ScreenSize size = EmuApi.GetScreenSize(true, EmuApi.ConsoleId.HistoryViewer);
 			Size newSize = new Size(size.Width * scale, size.Height * scale);
 			if(this.WindowState != FormWindowState.Maximized) {
 				Size sizeGap = newSize - ctrlRenderer.Size;
@@ -194,7 +191,7 @@ namespace Mesen.GUI.Forms
 			}
 
 			mnuImportMovie.Visible = false;
-			mnuExportMovie.Enabled = mnuExportMovie.HasDropDownItems && !_isNsf;
+			mnuExportMovie.Enabled = mnuExportMovie.HasDropDownItems;
 		}
 
 		private void ExportMovie(UInt32 segStart, UInt32 segEnd)

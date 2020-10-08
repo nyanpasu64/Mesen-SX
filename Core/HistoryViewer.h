@@ -9,7 +9,7 @@ class Console;
 class HistoryViewer : public IInputProvider
 {
 private:
-	static constexpr int32_t BufferSize = 30; //Number of frames between each save state
+	static constexpr int32_t BufferSize = 60; //Number of frames between each save state
 
 	shared_ptr<Console> _console;
 	std::deque<RewindData> _history;
