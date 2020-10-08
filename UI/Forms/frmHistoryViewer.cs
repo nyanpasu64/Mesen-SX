@@ -102,7 +102,7 @@ namespace Mesen.GUI.Forms
 			double verticalScale = (double)dimensions.Height / size.Height;
 			double horizontalScale = (double)dimensions.Width / size.Width;
 			double scale = Math.Min(verticalScale, horizontalScale);
-//			InteropEmu.SetVideoScale(scale, InteropEmu.ConsoleId.HistoryViewer); TODO
+			EmuApi.SetVideoScale(scale, EmuApi.ConsoleId.HistoryViewer);
 		}
 
 		private void tmrUpdatePosition_Tick(object sender, EventArgs e)

@@ -4,6 +4,7 @@
 #include "../Core/SoundMixer.h"
 #include "../Core/MovieManager.h"
 #include "../Core/RewindManager.h"
+#include "../Core/EmuSettings.h"
 
 #ifdef _WIN32
 #include "../Windows/Renderer.h"
@@ -41,9 +42,11 @@ extern "C"
 		_historyConsole->Unlock();
 
 		//Force some settings
+		VideoConfig config = _historyConsole->GetSettings()->GetVideoConfig();
+		config.VideoScale = 2;
+		_historyConsole->GetSettings()->SetVideoConfig(config);
 // TODO
 //		_historyConsole->GetSettings()->SetEmulationSpeed(100);
-//		_historyConsole->GetSettings()->SetVideoScale(2);
 //		_historyConsole->GetSettings()->ClearFlags(EmulationFlags::InBackground | EmulationFlags::Rewind /*|EmulationFlags::ForceMaxSpeed | EmulationFlags::DebuggerWindowEnabled*/);
 		
 #ifdef _WIN32

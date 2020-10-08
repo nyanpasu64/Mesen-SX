@@ -37,6 +37,7 @@ namespace Mesen.GUI
 		}
 
 		[DllImport(DllPath)] public static extern void SetMasterVolume(double volume, ConsoleId consoleId);
+		[DllImport(DllPath)] public static extern void SetVideoScale(double scale, ConsoleId consoleId);
 
 		[DllImport(DllPath)] public static extern IntPtr RegisterNotificationCallback(NotificationListener.NotificationCallback callback);
 		[DllImport(DllPath)] public static extern void UnregisterNotificationCallback(IntPtr notificationListener);

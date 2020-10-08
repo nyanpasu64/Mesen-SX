@@ -132,6 +132,12 @@ extern "C" {
 		GetConsoleById(consoleId)->GetSettings()->SetAudioConfig(config);
 	}
 
+	DllExport void __stdcall SetVideoScale(double scale, ConsoleId consoleId) {
+		VideoConfig config = GetConsoleById(consoleId)->GetSettings()->GetVideoConfig();
+		config.VideoScale = scale;
+		GetConsoleById(consoleId)->GetSettings()->SetVideoConfig(config);
+	}
+
 
 	DllExport void __stdcall SetFullscreenMode(bool fullscreen, void *windowHandle, uint32_t monitorWidth, uint32_t monitorHeight)
 	{
