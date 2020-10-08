@@ -46,7 +46,7 @@ namespace Mesen.GUI.Forms
 			base.OnShown(e);
 
 			HistoryViewerApi.HistoryViewerInitialize(this.Handle, ctrlRenderer.Handle);
-			trkPosition.Maximum = (int)(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60 / 2);
+			trkPosition.Maximum = (int)(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60);
 			UpdatePositionLabel(0);
 			EmuApi.Resume(EmuApi.ConsoleId.HistoryViewer);
 			tmrUpdatePosition.Start();
@@ -80,7 +80,7 @@ namespace Mesen.GUI.Forms
 
 		private void trkPosition_ValueChanged(object sender, EventArgs e)
 		{
-			HistoryViewerApi.HistoryViewerSetPosition((UInt32)trkPosition.Value * 2);
+			HistoryViewerApi.HistoryViewerSetPosition((UInt32)trkPosition.Value);
 		}
 
 		private void SetScale(int scale)
@@ -119,7 +119,7 @@ namespace Mesen.GUI.Forms
 				btnPausePlay.Image = Properties.Resources.MediaPause;
 			}
 
-			UInt32 positionInSeconds = HistoryViewerApi.HistoryViewerGetPosition() / 2;
+			UInt32 positionInSeconds = HistoryViewerApi.HistoryViewerGetPosition();
 			UpdatePositionLabel(positionInSeconds);
 
 			if(positionInSeconds <= trkPosition.Maximum) {
@@ -156,15 +156,15 @@ namespace Mesen.GUI.Forms
 
 			List<UInt32> segments = new List<UInt32>(HistoryViewerApi.HistoryViewerGetSegments());
 			UInt32 segmentStart = 0;
-			segments.Add(HistoryViewerApi.HistoryViewerGetHistoryLength() / 30);
+			segments.Add(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60);
 
 			for(int i = 0; i < segments.Count; i++) {
-				if(segments[i] - segmentStart > 4) {
+				if(segments[i] - segmentStart > 2) {
 					//Only list segments that are at least 2 seconds long
 					UInt32 segStart = segmentStart;
 					UInt32 segEnd = segments[i];
-					TimeSpan start = new TimeSpan(0, 0, (int)(segmentStart) / 2);
-					TimeSpan end = new TimeSpan(0, 0, (int)(segEnd / 2));
+					TimeSpan start = new TimeSpan(0, 0, (int)(segmentStart));
+					TimeSpan end = new TimeSpan(0, 0, (int)(segEnd));
 
 					string segmentName = ResourceHelper.GetMessage("MovieSegment", (mnuExportMovie.DropDownItems.Count + 1).ToString());
 					ToolStripMenuItem segmentItem = new ToolStripMenuItem(segmentName + ", " + start.ToString() + " - " + end.ToString());

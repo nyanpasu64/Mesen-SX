@@ -182,6 +182,7 @@ bool MovieRecorder::CreateMovie(string movieFile, std::deque<RewindData>& data, 
 {
 	_filename = movieFile;
 	_writer.reset(new ZipWriter());
+
 	if (startPosition < data.size() && endPosition <= data.size() && _writer->Initialize(_filename)) {
 		vector<shared_ptr<BaseControlDevice>> devices = _console->GetControlManager()->GetControlDevices();
 
@@ -197,7 +198,7 @@ bool MovieRecorder::CreateMovie(string movieFile, std::deque<RewindData>& data, 
 
 		for (uint32_t i = startPosition; i < endPosition; i++) {
 			RewindData rewindData = data[i];
-			for (uint32_t i = 0; i < 30; i++) {
+			for (uint32_t i = 0; i < 60; i++) {
 				for (shared_ptr<BaseControlDevice>& device : devices) {
 					uint8_t port = device->GetPort();
 					if (i < rewindData.InputLogs[port].size()) {
@@ -212,6 +213,7 @@ bool MovieRecorder::CreateMovie(string movieFile, std::deque<RewindData>& data, 
 		//Write the movie file
 		return Stop();
 	}
+
 	return false;
 }
 

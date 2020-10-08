@@ -19,8 +19,8 @@ namespace Mesen.GUI.Forms
 		{
 			InitializeComponent();
 
-			dtpStart.Value = new DateTime(2000, 1, 1, 0, 0, 0).AddSeconds((int)(Math.Ceiling((decimal)segStart / 2)));
-			dtpEnd.Value = new DateTime(2000, 1, 1, 0, 0, 0).AddSeconds(segEnd / 2);
+			dtpStart.Value = new DateTime(2000, 1, 1, 0, 0, 0).AddSeconds((int)(Math.Ceiling((decimal)segStart)));
+			dtpEnd.Value = new DateTime(2000, 1, 1, 0, 0, 0).AddSeconds(segEnd);
 
 			dtpStart.MinDate = dtpStart.Value;
 			dtpStart.MaxDate = dtpEnd.Value;
@@ -36,8 +36,8 @@ namespace Mesen.GUI.Forms
 		protected override void OnFormClosing(FormClosingEventArgs e)
 		{
 			base.OnFormClosing(e);
-			ExportStart = (UInt32)(dtpStart.Value.TimeOfDay.TotalSeconds * 2);
-			ExportEnd = (UInt32)(dtpEnd.Value.TimeOfDay.TotalSeconds * 2);
+			ExportStart = (UInt32)(dtpStart.Value.TimeOfDay.TotalSeconds);
+			ExportEnd = (UInt32)(dtpEnd.Value.TimeOfDay.TotalSeconds);
 		}
 	}
 }
