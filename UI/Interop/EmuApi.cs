@@ -36,6 +36,8 @@ namespace Mesen.GUI
 			return new Version((int)major, (int)minor, (int)revision);
 		}
 
+		[DllImport(DllPath)] public static extern void SetMasterVolume(double volume, ConsoleId consoleId);
+
 		[DllImport(DllPath)] public static extern IntPtr RegisterNotificationCallback(NotificationListener.NotificationCallback callback);
 		[DllImport(DllPath)] public static extern void UnregisterNotificationCallback(IntPtr notificationListener);
 

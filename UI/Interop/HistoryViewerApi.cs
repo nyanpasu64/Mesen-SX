@@ -26,7 +26,7 @@ namespace Mesen.GUI
 
 		public static UInt32[] HistoryViewerGetSegments()
 		{
-			UInt32[] segmentBuffer = new UInt32[HistoryViewerApi.HistoryViewerGetHistoryLength() / 30];
+			UInt32[] segmentBuffer = new UInt32[HistoryViewerApi.HistoryViewerGetHistoryLength() / 60];
 			UInt32 bufferSize = (UInt32)segmentBuffer.Length;
 
 			GCHandle hSegmentBuffer = GCHandle.Alloc(segmentBuffer, GCHandleType.Pinned);

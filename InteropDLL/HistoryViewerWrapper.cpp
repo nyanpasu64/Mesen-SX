@@ -48,7 +48,7 @@ extern "C"
 		
 #ifdef _WIN32
 		_historyRenderer.reset(new Renderer(_historyConsole, (HWND)viewerHandle, false));
-//		_historySoundManager.reset(new SoundManager(_historyConsole, (HWND)windowHandle));
+		_historySoundManager.reset(new SoundManager(_historyConsole, (HWND)windowHandle));
 #else 
 		_historyRenderer.reset(new SdlRenderer(_historyConsole, viewerHandle, false));
 		_historySoundManager.reset(new SdlSoundManager(_historyConsole));
@@ -57,8 +57,8 @@ extern "C"
 
 	DllExport void __stdcall HistoryViewerRelease()
 	{
-		_historyConsole->Stop(true); // TODO: Check on this
-		_historyConsole->Release(); // had True, "For ShutDown"
+		_historyConsole->Stop(true);
+		_historyConsole->Release(); // Mesen had True, "For ShutDown"
 		_historyRenderer.reset();
 		_historySoundManager.reset();
 		_historyConsole.reset();

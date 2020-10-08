@@ -117,13 +117,15 @@ bool HistoryViewer::SaveMovie(string movieFile, uint32_t startPosition, uint32_t
 	return result;
 }
 
+// Copies a given state to the main window's state
 void HistoryViewer::ResumeGameplay(shared_ptr<Console> console, uint32_t resumePosition)
 {
 	console->Lock();
 	if (_console->GetRomInfo().RomFile.GetSha1Hash() != console->GetRomInfo().RomFile.GetSha1Hash()) {
 		//Load game on the main window if they aren't the same		
 		console->LoadRom(console->GetRomInfo().RomFile, console->GetRomInfo().PatchFile);
-		// TODO?
+		// Mesen does console->Initialize(_console->GetRomPath(), _console->GetPatchFile());
+		// but that's probably equivalent
 	}
 	if (resumePosition < _history.size()) {
 		_history[resumePosition].LoadState(console);

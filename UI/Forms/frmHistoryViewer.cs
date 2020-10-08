@@ -102,7 +102,7 @@ namespace Mesen.GUI.Forms
 			double verticalScale = (double)dimensions.Height / size.Height;
 			double horizontalScale = (double)dimensions.Width / size.Width;
 			double scale = Math.Min(verticalScale, horizontalScale);
-//			InteropEmu.SetVideoScale(scale, InteropEmu.ConsoleId.HistoryViewer);
+//			InteropEmu.SetVideoScale(scale, InteropEmu.ConsoleId.HistoryViewer); TODO
 		}
 
 		private void tmrUpdatePosition_Tick(object sender, EventArgs e)
@@ -236,7 +236,7 @@ namespace Mesen.GUI.Forms
 
 		private void trkVolume_ValueChanged(object sender, EventArgs e)
 		{
-//			InteropEmu.SetMasterVolume(trkVolume.Value / 10d, 0, EmuApi.ConsoleId.HistoryViewer);
+			EmuApi.SetMasterVolume(trkVolume.Value, EmuApi.ConsoleId.HistoryViewer);
 		}
 
 		private void mnuScale1x_Click(object sender, EventArgs e)

@@ -126,6 +126,13 @@ extern "C" {
 		}
 	}
 
+	DllExport void __stdcall SetMasterVolume(double volume, ConsoleId consoleId) {
+		AudioConfig config = GetConsoleById(consoleId)->GetSettings()->GetAudioConfig();
+		config.MasterVolume = volume;
+		GetConsoleById(consoleId)->GetSettings()->SetAudioConfig(config);
+	}
+
+
 	DllExport void __stdcall SetFullscreenMode(bool fullscreen, void *windowHandle, uint32_t monitorWidth, uint32_t monitorHeight)
 	{
 		if(_renderer) {
