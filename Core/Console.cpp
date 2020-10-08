@@ -140,6 +140,10 @@ void Console::Run()
 			RunFrameWithRunAhead();
 		} else {
 			RunFrame();
+
+			if (_historyViewer) {
+				_historyViewer->ProcessEndOfFrame();
+			}
 			_rewindManager->ProcessEndOfFrame();
 			ProcessSystemActions();
 		}
@@ -568,16 +572,16 @@ HistoryViewer* Console::GetHistoryViewer()
 
 void Console::CopyRewindData(shared_ptr<Console> sourceConsole)
 {
-	sourceConsole->Pause();
-	Pause();
+	sourceConsole->Lock();
+	Lock();
 
 	//Disable battery saving for this instance
 	_batteryManager->SetSaveEnabled(false);
 	_historyViewer.reset(new HistoryViewer(shared_from_this()));
 	sourceConsole->GetRewindManager()->CopyHistory(_historyViewer);
 
-	Resume();
-	sourceConsole->Resume();
+	Unlock();
+	sourceConsole->Unlock();
 }
 
 void Console::PauseOnNextFrame()

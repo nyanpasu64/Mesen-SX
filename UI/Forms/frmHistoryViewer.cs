@@ -46,7 +46,7 @@ namespace Mesen.GUI.Forms
 			base.OnShown(e);
 
 			HistoryViewerApi.HistoryViewerInitialize(this.Handle, ctrlRenderer.Handle);
-			trkPosition.Maximum = (int)(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60);
+			trkPosition.Maximum = (int)(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60 / 2);
 			UpdatePositionLabel(0);
 			EmuApi.Resume(EmuApi.ConsoleId.HistoryViewer);
 			tmrUpdatePosition.Start();
