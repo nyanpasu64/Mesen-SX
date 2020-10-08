@@ -14,7 +14,6 @@ namespace Mesen.GUI
 		[DllImport(DllPath)] [return: MarshalAs(UnmanagedType.I1)] public static extern bool HistoryViewerEnabled();
 		[DllImport(DllPath)] public static extern void HistoryViewerInitialize(IntPtr windowHandle, IntPtr viewerHandle);
 		[DllImport(DllPath)] public static extern void HistoryViewerRelease();
-		[DllImport(DllPath)] public static extern void HistoryViewerRun();
 		[DllImport(DllPath)] public static extern void HistoryViewerStop();
 
 		[DllImport(DllPath)] public static extern UInt32 HistoryViewerGetHistoryLength();

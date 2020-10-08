@@ -63,7 +63,7 @@ void HistoryViewer::SeekTo(uint32_t seekPosition)
 {
 	//Seek to the specified position
 	if (seekPosition < _history.size()) {
-		_console->Pause();
+		_console->Lock();
 
 		bool wasPaused = _console->IsPaused();
 		_console->Resume();
@@ -78,7 +78,7 @@ void HistoryViewer::SeekTo(uint32_t seekPosition)
 			_console->Pause();
 		}
 
-		_console->Resume();
+		_console->Unlock();
 	}
 }
 
@@ -104,7 +104,7 @@ bool HistoryViewer::SaveMovie(string movieFile, uint32_t startPosition, uint32_t
 	//Take a savestate to be able to restore it after generating the movie file
 	//(the movie generation uses the console's inputs, which could affect the emulation otherwise)
 	stringstream state;
-	_console->Pause();
+	_console->Lock();
 	_console->GetSaveStateManager()->SaveState(state);
 
 	//Convert the rewind data to a .mmo file
@@ -113,13 +113,13 @@ bool HistoryViewer::SaveMovie(string movieFile, uint32_t startPosition, uint32_t
 
 	//Resume the state and resume
 	_console->GetSaveStateManager()->LoadState(state);
-	_console->Resume();
+	_console->Unlock();
 	return result;
 }
 
 void HistoryViewer::ResumeGameplay(shared_ptr<Console> console, uint32_t resumePosition)
 {
-	console->Pause();
+	console->Lock();
 	if (_console->GetRomInfo().RomFile.GetSha1Hash() != console->GetRomInfo().RomFile.GetSha1Hash()) {
 		//Load game on the main window if they aren't the same		
 		console->LoadRom(console->GetRomInfo().RomFile, console->GetRomInfo().PatchFile);
@@ -131,7 +131,7 @@ void HistoryViewer::ResumeGameplay(shared_ptr<Console> console, uint32_t resumeP
 	else {
 		_history[_history.size() - 1].LoadState(console);
 	}
-	console->Resume();
+	console->Unlock();
 }
 
 bool HistoryViewer::SetInput(BaseControlDevice* device)

@@ -264,9 +264,9 @@ extern "C" {
 		return _logString.c_str();
 	}
 
-	DllExport ScreenSize __stdcall GetScreenSize(bool ignoreScale)
+	DllExport ScreenSize __stdcall GetScreenSize(bool ignoreScale, ConsoleId console)
 	{
-		return _console->GetVideoDecoder()->GetScreenSize(ignoreScale);
+		return GetConsoleById(console)->GetVideoDecoder()->GetScreenSize(ignoreScale);
 	}
 	
 	DllExport void __stdcall ClearCheats() { _console->GetCheatManager()->ClearCheats(); }

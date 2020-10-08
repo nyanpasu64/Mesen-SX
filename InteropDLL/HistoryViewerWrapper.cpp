@@ -34,8 +34,11 @@ extern "C"
 		_historyConsole.reset(new Console());
 		// TODO: something about initializing with settings?
 		_historyConsole->Initialize();
+
+		_historyConsole->Lock();
 		_historyConsole->LoadRom(_console->GetRomInfo().RomFile, _console->GetRomInfo().PatchFile);
 		_historyConsole->CopyRewindData(_console);
+		_historyConsole->Unlock();
 
 		//Force some settings
 // TODO
@@ -54,18 +57,11 @@ extern "C"
 
 	DllExport void __stdcall HistoryViewerRelease()
 	{
-		_historyConsole->Stop(false); // TODO: Check on this
+		_historyConsole->Stop(true); // TODO: Check on this
 		_historyConsole->Release(); // had True, "For ShutDown"
 		_historyRenderer.reset();
 		_historySoundManager.reset();
 		_historyConsole.reset();
-	}
-
-	DllExport void __stdcall HistoryViewerRun()
-	{
-		if (_historyConsole) {
-			_historyConsole->Run();
-		}
 	}
 
 	DllExport uint32_t __stdcall HistoryViewerGetHistoryLength()

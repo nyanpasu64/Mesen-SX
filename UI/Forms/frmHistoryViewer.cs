@@ -51,7 +51,6 @@ namespace Mesen.GUI.Forms
 			HistoryViewerApi.HistoryViewerInitialize(this.Handle, ctrlRenderer.Handle);
 			trkPosition.Maximum = (int)(HistoryViewerApi.HistoryViewerGetHistoryLength() / 60);
 			UpdatePositionLabel(0);
-			StartEmuThread();
 			EmuApi.Resume(EmuApi.ConsoleId.HistoryViewer);
 			tmrUpdatePosition.Start();
 			trkVolume.Value = ConfigManager.Config.HistoryViewer.Volume;
@@ -68,22 +67,6 @@ namespace Mesen.GUI.Forms
 			tmrUpdatePosition.Stop();
 			HistoryViewerApi.HistoryViewerRelease();
 			base.OnClosing(e);
-		}
-
-		private void StartEmuThread()
-		{
-			if(_emuThread == null) {
-				_emuThread = new Thread(() => {
-					try {
-						HistoryViewerApi.HistoryViewerRun();
-						_emuThread = null;
-					} catch(Exception ex) {
-						MesenMsgBox.Show("UnexpectedError", MessageBoxButtons.OK, MessageBoxIcon.Error, ex.ToString());
-						_emuThread = null;
-					}
-				});
-				_emuThread.Start();
-			}
 		}
 
 		private void TogglePause()
