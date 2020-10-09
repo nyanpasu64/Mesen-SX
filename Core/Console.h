@@ -165,7 +165,7 @@ public:
 	shared_ptr<ControlManager> GetControlManager();
 	shared_ptr<DmaController> GetDmaController();
 	shared_ptr<Msu1> GetMsu1();
-	HistoryViewer* Console::GetHistoryViewer();
+	HistoryViewer* GetHistoryViewer();
 
 	shared_ptr<Debugger> GetDebugger(bool autoStart = true);
 	void StopDebugger();
