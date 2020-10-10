@@ -302,6 +302,7 @@ namespace Mesen.GUI.Forms
 			mnuProfiler.InitShortcut(this, nameof(DebuggerShortcutsConfig.OpenProfiler));
 			mnuAssembler.InitShortcut(this, nameof(DebuggerShortcutsConfig.OpenAssembler));
 			mnuDebugLog.InitShortcut(this, nameof(DebuggerShortcutsConfig.OpenDebugLog));
+			mnuWatchWindow.InitShortcut(this, nameof(DebuggerShortcutsConfig.OpenWatchWindow));
 
 			mnuNoneFilter.Click += (s, e) => { _shortcuts.SetVideoFilter(VideoFilterType.None); };
 			mnuNtscFilter.Click += (s, e) => { _shortcuts.SetVideoFilter(VideoFilterType.NTSC); };
@@ -369,6 +370,7 @@ namespace Mesen.GUI.Forms
 			mnuProfiler.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.Profiler); };
 			mnuAssembler.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.Assembler); };
 			mnuDebugLog.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.DebugLog); };
+			mnuWatchWindow.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.WatchWindow); };
 
 			mnuGbTilemapViewer.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.GbTilemapViewer); };
 			mnuGbTileViewer.Click += (s, e) => { DebugWindowManager.OpenDebugWindow(DebugWindow.GbTileViewer); };
@@ -486,6 +488,7 @@ namespace Mesen.GUI.Forms
 			mnuProfiler.Enabled = running;
 			mnuAssembler.Enabled = running;
 			mnuDebugLog.Enabled = running;
+			mnuWatchWindow.Enabled = running;
 
 			bool isGameboyMode = coprocessor == CoprocessorType.Gameboy;
 			bool isSuperGameboy = coprocessor == CoprocessorType.SGB;
@@ -827,5 +830,6 @@ namespace Mesen.GUI.Forms
 				_historyViewerWindow.Focus();
 			}
 		}
+
    }
 }

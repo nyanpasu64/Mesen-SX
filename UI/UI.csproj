@@ -229,6 +229,7 @@
     <Compile Include="Config\EmulationConfig.cs" />
     <Compile Include="Config\NetplayConfig.cs" />
     <Compile Include="Config\VideoConfig.cs" />
+    <Compile Include="Config\WatchWindowConfig.cs" />
     <Compile Include="Controls\ctrlLinkLabel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -317,6 +318,12 @@
     </Compile>
     <Compile Include="Debugger\frmDebugLog.Designer.cs">
       <DependentUpon>frmDebugLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Debugger\frmWatchWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Debugger\frmWatchWindow.Designer.cs">
+      <DependentUpon>frmWatchWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Debugger\Integration\RgbdsSymbolFile.cs" />
     <Compile Include="Debugger\Integration\BassLabelFile.cs" />
@@ -1109,6 +1116,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Debugger\frmDebugLog.resx">
       <DependentUpon>frmDebugLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Debugger\frmWatchWindow.resx">
+      <DependentUpon>frmWatchWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Debugger\MemoryTools\ctrlMemoryAccessCounters.resx">
       <DependentUpon>ctrlMemoryAccessCounters.cs</DependentUpon>
