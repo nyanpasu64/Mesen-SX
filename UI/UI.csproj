@@ -217,6 +217,7 @@
     <Compile Include="Config\ConfigManager.cs" />
     <Compile Include="Config\CheatCodes.cs" />
     <Compile Include="Config\GameboyConfig.cs" />
+    <Compile Include="Config\HistoryViewerConfig.cs" />
     <Compile Include="Config\InputConfig.cs" />
     <Compile Include="Config\FileAssociationHelper.cs" />
     <Compile Include="Config\CheatWindowConfig.cs" />
@@ -906,6 +907,14 @@
     <Compile Include="Forms\Config\frmRecordMovie.Designer.cs">
       <DependentUpon>frmRecordMovie.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmHistoryViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmHistoryViewer.Designer.cs" />
+    <Compile Include="Forms\frmSelectExportRange.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSelectExportRange.Designer.cs" />
     <Compile Include="Forms\MonoThemeHelper.cs" />
     <Compile Include="Forms\MonoToolStripHelper.cs" />
     <Compile Include="Forms\NetPlay\frmClientConfig.cs">
@@ -970,6 +979,7 @@
       <DependentUpon>frmRecordAvi.cs</DependentUpon>
     </Compile>
     <Compile Include="Interop\DebugState.cs" />
+    <Compile Include="Interop\HistoryViewerApi.cs" />
     <Compile Include="Interop\NetplayApi.cs" />
     <Compile Include="Interop\RecordApi.cs" />
     <Compile Include="Interop\TestApi.cs" />
@@ -1298,6 +1308,8 @@
     <EmbeddedResource Include="Forms\Config\frmRecordMovie.resx">
       <DependentUpon>frmRecordMovie.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmHistoryViewer.resx" />
+    <EmbeddedResource Include="Forms\frmSelectExportRange.resx" />
     <EmbeddedResource Include="Forms\NetPlay\frmClientConfig.resx">
       <DependentUpon>frmClientConfig.cs</DependentUpon>
     </EmbeddedResource>
