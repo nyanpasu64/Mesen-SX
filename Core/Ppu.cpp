@@ -1723,7 +1723,7 @@ uint8_t Ppu::Read(uint16_t addr)
 			if(_regs->GetIoPortOutput() & 0x80) {
 				_locationLatched = false;
 
-				//"The high/low selector is reset to ÅelowÅf when $213F is read" (the selector is NOT reset when the counter is latched)
+				//"The high/low selector is reset to ?elow?f when $213F is read" (the selector is NOT reset when the counter is latched)
 				_horizontalLocToggle = false;
 				_verticalLocationToggle = false;
 			}
@@ -1832,7 +1832,7 @@ void Ppu::Write(uint32_t addr, uint8_t value)
 			_state.MosaicSize = ((value & 0xF0) >> 4) + 1;
 			uint8_t mosaicEnabled = value & 0x0F;
 			if(!_state.MosaicEnabled && mosaicEnabled) {
-				//"If this register is set during the frame, the Åstarting scanline is the current scanline, otherwise it is the first visible scanline of the frame."
+				//"If this register is set during the frame, the ?starting scanline is the current scanline, otherwise it is the first visible scanline of the frame."
 				//This is only done when mosaic is turned on from an off state (FF6 mosaic effect looks wrong otherwise)
 				//FF6's mosaic effect is broken on some screens without this.
 				_mosaicScanlineCounter = _state.MosaicSize + 1;
