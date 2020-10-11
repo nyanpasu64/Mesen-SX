@@ -511,6 +511,41 @@ void Debugger::GetState(DebugState &state, bool partialPpuState)
 	}
 }
 
+void Debugger::SetCpuRegister(CpuRegister reg, uint16_t value)
+{
+	_cpu->SetReg(reg, value);
+}
+
+void Debugger::SetCx4Register(Cx4Register reg, uint32_t value)
+{
+	_cart->GetCx4()->SetReg(reg, value);
+}
+
+void Debugger::SetGameboyRegister(GbRegister reg, uint16_t value)
+{
+	_cart->GetGameboy()->SetReg(reg, value);
+}
+
+void Debugger::SetGsuRegister(GsuRegister reg, uint16_t value)
+{
+	_cart->GetGsu()->SetReg(reg, value);
+}
+
+void Debugger::SetNecDspRegister(NecDspRegister reg, uint16_t value)
+{
+	_cart->GetDsp()->SetReg(reg, value);
+}
+
+void Debugger::SetSa1Register(CpuRegister reg, uint16_t value)
+{
+	_cart->GetSa1()->SetReg(reg, value);
+}
+
+void Debugger::SetSpcRegister(SpcRegister reg, uint8_t value)
+{
+	_spc->SetReg(reg, value);
+}
+
 AddressInfo Debugger::GetAbsoluteAddress(AddressInfo relAddress)
 {
 	if(relAddress.Type == SnesMemoryType::CpuMemory) {

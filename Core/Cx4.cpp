@@ -479,3 +479,30 @@ Cx4State Cx4::GetState()
 {
 	return _state;
 }
+
+void Cx4::SetReg(Cx4Register reg, uint32_t value)
+{
+	switch (reg)
+	{
+	case Cx4Register::Cx4RegPB:
+	{
+		_state.PB = value & 0xFFFF;
+	} break;
+	case Cx4Register::Cx4RegPC:
+	{
+		_state.PC = value & 0xFF;
+	} break;
+	case Cx4Register::Cx4RegA:
+	{
+		_state.A = value;
+	} break;
+	case Cx4Register::Cx4RegP:
+	{
+		_state.P = value & 0xFFFF;
+	} break;
+	case Cx4Register::Cx4RegSP:
+	{
+		_state.SP = value & 0xFF;
+	} break;
+	}
+}

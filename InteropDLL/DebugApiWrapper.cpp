@@ -67,7 +67,15 @@ extern "C"
 	DllExport void __stdcall ResetProfiler(CpuType cpuType) { GetDebugger()->GetCallstackManager(cpuType)->GetProfiler()->Reset(); }
 
 	DllExport void __stdcall GetState(DebugState& state) { GetDebugger()->GetState(state, false); }
-	
+
+	DllExport void __stdcall SetCpuRegister(CpuRegister reg, uint16_t value) { GetDebugger()->SetCpuRegister(reg, value); }
+	DllExport void __stdcall SetSpcRegister(SpcRegister reg, uint32_t value) { GetDebugger()->SetSpcRegister(reg, value); }
+	DllExport void __stdcall SetNecDspRegister(NecDspRegister reg, uint32_t value) { GetDebugger()->SetNecDspRegister(reg, value); }
+	DllExport void __stdcall SetSa1Register(CpuRegister reg, uint32_t value) { GetDebugger()->SetSa1Register(reg, value); }
+	DllExport void __stdcall SetGsuRegister(GsuRegister reg, uint32_t value) { GetDebugger()->SetGsuRegister(reg, value); }
+	DllExport void __stdcall SetCx4Register(Cx4Register reg, uint32_t value) { GetDebugger()->SetCx4Register(reg, value); }
+	DllExport void __stdcall SetGameboyRegister(GbRegister reg, uint32_t value) { GetDebugger()->SetGameboyRegister(reg, value); }
+
 	DllExport const char* __stdcall GetDebuggerLog()
 	{
 		_logString = GetDebugger()->GetLog();

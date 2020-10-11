@@ -583,3 +583,34 @@ void Spc::LoadSpcFile(SpcFileData* data)
 	_state.Timer1.SetOutput(data->TimerOutput[0]);
 	_state.Timer2.SetOutput(data->TimerOutput[0]);
 }
+
+void Spc::SetReg(SpcRegister reg, uint8_t value)
+{
+	switch (reg)
+	{
+	case SpcRegister::SpcRegPC:
+	{
+		_state.PC = value;
+	} break;
+	case SpcRegister::SpcRegA:
+	{
+		_state.A = value;
+	} break;
+	case SpcRegister::SpcRegX:
+	{
+		_state.X = value;
+	} break;
+	case SpcRegister::SpcRegY:
+	{
+		_state.Y = value;
+	} break;
+	case SpcRegister::SpcRegSP:
+	{
+		_state.SP = value;
+	} break;
+	case SpcRegister::SpcRegPS:
+	{
+		_state.PS = value;
+	} break;
+	}
+}
