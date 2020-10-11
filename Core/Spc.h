@@ -318,7 +318,7 @@ public:
 
 	void Serialize(Serializer &s) override;
 
-	void SetReg(SpcRegister reg, uint8_t value);
+	void SetReg(SpcRegister reg, uint16_t value);
 
 #ifdef DUMMYSPC
 private:

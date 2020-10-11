@@ -541,7 +541,7 @@ void Debugger::SetSa1Register(CpuRegister reg, uint16_t value)
 	_cart->GetSa1()->SetReg(reg, value);
 }
 
-void Debugger::SetSpcRegister(SpcRegister reg, uint8_t value)
+void Debugger::SetSpcRegister(SpcRegister reg, uint16_t value)
 {
 	_spc->SetReg(reg, value);
 }

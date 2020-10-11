@@ -300,6 +300,22 @@ enum class CpuRegister : uint8_t
 
 enum class Cx4Register : uint8_t
 {
+	Cx4Reg0,
+	Cx4Reg1,
+	Cx4Reg2,
+	Cx4Reg3,
+	Cx4Reg4,
+	Cx4Reg5,
+	Cx4Reg6,
+	Cx4Reg7,
+	Cx4Reg8,
+	Cx4Reg9,
+	Cx4Reg10,
+	Cx4Reg11,
+	Cx4Reg12,
+	Cx4Reg13,
+	Cx4Reg14,
+	Cx4Reg15,
 	Cx4RegPB,
 	Cx4RegPC,
 	Cx4RegA,

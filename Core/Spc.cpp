@@ -584,7 +584,7 @@ void Spc::LoadSpcFile(SpcFileData* data)
 	_state.Timer2.SetOutput(data->TimerOutput[0]);
 }
 
-void Spc::SetReg(SpcRegister reg, uint8_t value)
+void Spc::SetReg(SpcRegister reg, uint16_t value)
 {
 	switch (reg)
 	{
@@ -594,23 +594,23 @@ void Spc::SetReg(SpcRegister reg, uint8_t value)
 	} break;
 	case SpcRegister::SpcRegA:
 	{
-		_state.A = value;
+		_state.A = value & 0xFF;
 	} break;
 	case SpcRegister::SpcRegX:
 	{
-		_state.X = value;
+		_state.X = value & 0xFF;
 	} break;
 	case SpcRegister::SpcRegY:
 	{
-		_state.Y = value;
+		_state.Y = value & 0xFF;
 	} break;
 	case SpcRegister::SpcRegSP:
 	{
-		_state.SP = value;
+		_state.SP = value & 0xFF;
 	} break;
 	case SpcRegister::SpcRegPS:
 	{
-		_state.PS = value;
+		_state.PS = value & 0xFF;
 	} break;
 	}
 }

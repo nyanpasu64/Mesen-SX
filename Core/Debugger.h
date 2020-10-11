@@ -135,7 +135,7 @@ public:
 	void SetGsuRegister(GsuRegister reg, uint16_t value);
 	void SetNecDspRegister(NecDspRegister reg, uint16_t value);
 	void SetSa1Register(CpuRegister reg, uint16_t value);
-	void SetSpcRegister(SpcRegister reg, uint8_t value);
+	void SetSpcRegister(SpcRegister reg, uint16_t value);
 
 	AddressInfo GetAbsoluteAddress(AddressInfo relAddress);
 	AddressInfo GetRelativeAddress(AddressInfo absAddress, CpuType cpuType);
