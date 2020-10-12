@@ -937,7 +937,7 @@ namespace Mesen.GUI
 		CpuRegK,
 		CpuRegDBR,
 		CpuRegPS,
-		CpuRegNmiFlag,
+		CpuFlagNmi,
 	}
 
 	public enum Cx4Register : byte

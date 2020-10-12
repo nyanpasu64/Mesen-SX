@@ -296,7 +296,7 @@ enum class CpuRegister : uint8_t
 	CpuRegK,
 	CpuRegDBR,
 	CpuRegPS,
-	CpuRegNmiFlag
+	CpuFlagNmi
 };
 
 enum class Cx4Register : uint8_t
