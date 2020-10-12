@@ -347,6 +347,7 @@ public:
 	void Serialize(Serializer &s) override;
 
 	void SetReg(CpuRegister reg, uint16_t value);
+	void SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set);
 
 #ifdef DUMMYCPU
 private:

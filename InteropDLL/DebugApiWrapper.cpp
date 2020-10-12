@@ -69,6 +69,7 @@ extern "C"
 	DllExport void __stdcall GetState(DebugState& state) { GetDebugger()->GetState(state, false); }
 
 	DllExport void __stdcall SetCpuRegister(CpuRegister reg, uint16_t value) { GetDebugger()->SetCpuRegister(reg, value); }
+	DllExport void __stdcall SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set) { GetDebugger()->SetCpuProcFlag(flag, set); };
 	DllExport void __stdcall SetSpcRegister(SpcRegister reg, uint16_t value) { GetDebugger()->SetSpcRegister(reg, value); }
 	DllExport void __stdcall SetNecDspRegister(NecDspRegister reg, uint16_t value) { GetDebugger()->SetNecDspRegister(reg, value); }
 	DllExport void __stdcall SetSa1Register(CpuRegister reg, uint16_t value) { GetDebugger()->SetSa1Register(reg, value); }

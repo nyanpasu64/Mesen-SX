@@ -59,6 +59,7 @@ namespace Mesen.GUI
 		}
 
 		[DllImport(DllPath)] public static extern void SetCpuRegister(CpuRegister reg, UInt16 value);
+		[DllImport(DllPath)] public static extern void SetCpuProcFlag(ProcFlags flag, [MarshalAs(UnmanagedType.I1)]bool set);
 		[DllImport(DllPath)] public static extern void SetSpcRegister(SpcRegister reg, UInt16 value);
 		[DllImport(DllPath)] public static extern void SetNecDspRegister(NecDspRegister reg, UInt16 value);
 		[DllImport(DllPath)] public static extern void SetSa1Register(CpuRegister reg, UInt16 value);

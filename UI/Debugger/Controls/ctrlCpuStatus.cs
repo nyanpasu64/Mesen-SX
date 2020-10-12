@@ -34,7 +34,16 @@ namespace Mesen.GUI.Debugger.Controls
 			_cpuBinder.AddBinding(nameof(CpuState.SP), txtS, onEditHandler: (s, e) => { DebugApi.SetCpuRegister(CpuRegister.CpuRegSP, UInt16.Parse(txtS.Text, NumberStyles.HexNumber)); });
 			_cpuBinder.AddBinding(nameof(CpuState.PS), txtP, onEditHandler: (s, e) => { DebugApi.SetCpuRegister(CpuRegister.CpuRegPS, UInt16.Parse(txtP.Text, NumberStyles.HexNumber)); });
 
-			_cpuBinder.AddBinding(nameof(CpuState.NmiFlag), chkNmi, onEditHandler: (s, e) => { DebugApi.SetCpuRegister(CpuRegister.CpuRegNmiFlag, (UInt16)(chkNmi.Checked ? 1 : 0)); });
+			_cpuBinder.AddBinding(nameof(CpuState.NmiFlag), chkNmi, onEditHandler: (s, e) => { DebugApi.SetCpuRegister(CpuRegister.CpuFlagNmi, (UInt16)(chkNmi.Checked ? 1 : 0)); });
+
+			chkIndex.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.IndexMode8, chkIndex.Checked); };
+			chkCarry.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.Carry, chkCarry.Checked); };
+			chkDecimal.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.Decimal, chkDecimal.Checked); };
+			chkInterrupt.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.IrqDisable, chkInterrupt.Checked); };
+			chkNegative.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.Negative, chkNegative.Checked); };
+			chkOverflow.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.Overflow, chkOverflow.Checked); };
+			chkMemory.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.MemoryMode8, chkMemory.Checked); };
+			chkZero.CheckedChanged += (s, e) => { DebugApi.SetCpuProcFlag(ProcFlags.Zero, chkZero.Checked); };
 		}
 
 		public void UpdateStatus(CpuState state)

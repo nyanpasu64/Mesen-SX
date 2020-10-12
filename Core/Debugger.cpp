@@ -516,6 +516,11 @@ void Debugger::SetCpuRegister(CpuRegister reg, uint16_t value)
 	_cpu->SetReg(reg, value);
 }
 
+void Debugger::SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set)
+{
+	_cpu->SetCpuProcFlag(flag, set);
+}
+
 void Debugger::SetCx4Register(Cx4Register reg, uint32_t value)
 {
 	_cart->GetCx4()->SetReg(reg, value);

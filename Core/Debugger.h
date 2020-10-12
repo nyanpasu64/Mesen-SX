@@ -130,6 +130,7 @@ public:
 	void GetState(DebugState& state, bool partialPpuState);
 
 	void SetCpuRegister(CpuRegister reg, uint16_t value);
+	void SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set);
 	void SetCx4Register(Cx4Register reg, uint32_t value);
 	void SetGameboyRegister(GbRegister reg, uint16_t value);
 	void SetGsuRegister(GsuRegister reg, uint16_t value);
