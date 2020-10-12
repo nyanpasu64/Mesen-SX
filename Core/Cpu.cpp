@@ -157,5 +157,9 @@ void Cpu::SetReg(CpuRegister reg, uint16_t value)
 	{
 		_state.PS = value & 0xFF;
 	} break;
+	case CpuRegister::CpuRegNmiFlag:
+	{
+		_state.NmiFlag = value != 0;
+	} break;
 	}
 }
