@@ -36,14 +36,15 @@ void BreakpointManager::SetBreakpoints(Breakpoint breakpoints[], uint32_t count)
 					continue;
 				}
 
-				_breakpoints[i].push_back(bp);
+				int curIndex = _breakpoints[i].size();
+				_breakpoints[i].insert(std::make_pair(curIndex, bp));
 
 				if(bp.HasCondition()) {
 					bool success = true;
 					ExpressionData data = _bpExpEval->GetRpnList(bp.GetCondition(), success);
-					_rpnList[i].push_back(success ? data : ExpressionData());
+					_rpnList[i].insert(std::make_pair(curIndex, success ? data : ExpressionData()));
 				} else {
-					_rpnList[i].push_back(ExpressionData());
+					_rpnList[i].insert(std::make_pair(curIndex, ExpressionData()));
 				}
 				
 				_hasBreakpoint = true;
@@ -82,15 +83,15 @@ int BreakpointManager::InternalCheckBreakpoint(MemoryOperationInfo operationInfo
 	DebugState state;
 	_debugger->GetState(state, false);
 	EvalResultType resultType;
-	vector<Breakpoint> &breakpoints = _breakpoints[(int)type];
-	for(size_t i = 0; i < breakpoints.size(); i++) {
-		if(breakpoints[i].Matches(operationInfo.Address, address)) {
-			if(!breakpoints[i].HasCondition() || _bpExpEval->Evaluate(_rpnList[(int)type][i], state, resultType, operationInfo)) {
-				if(breakpoints[i].IsMarked()) {
-					_eventManager->AddEvent(DebugEventType::Breakpoint, operationInfo, breakpoints[i].GetId());
+	unordered_map<int, Breakpoint> &breakpoints = _breakpoints[(int)type];
+	for (auto it = breakpoints.begin(); it != breakpoints.end(); it++) {
+		if (it->second.Matches(operationInfo.Address, address)) {
+			if (!it->second.HasCondition() || _bpExpEval->Evaluate(_rpnList[(int)type][it->first], state, resultType, operationInfo)) {
+				if (it->second.IsMarked()) {
+					_eventManager->AddEvent(DebugEventType::Breakpoint, operationInfo, it->first);
 				}
-				if(breakpoints[i].IsEnabled()) {
-					return breakpoints[i].GetId();
+				if (it->second.IsEnabled()) {
+					return it->first;
 				}
 			}
 		}

@@ -19,8 +19,8 @@ private:
 	CpuType _cpuType;
 	IEventManager *_eventManager;
 	
-	vector<Breakpoint> _breakpoints[BreakpointTypeCount];
-	vector<ExpressionData> _rpnList[BreakpointTypeCount];
+	unordered_map<int, Breakpoint> _breakpoints[BreakpointTypeCount];
+	unordered_map<int, ExpressionData> _rpnList[BreakpointTypeCount];
 	bool _hasBreakpoint;
 	bool _hasBreakpointType[BreakpointTypeCount] = {};
 
