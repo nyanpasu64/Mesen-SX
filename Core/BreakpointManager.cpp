@@ -54,6 +54,30 @@ void BreakpointManager::SetBreakpoints(Breakpoint breakpoints[], uint32_t count)
 	}
 }
 
+void BreakpointManager::GetBreakpoints(Breakpoint* breakpoints, int& execs, int& reads, int& writes)
+{
+	execs = _breakpoints[static_cast<int>(BreakpointType::Execute)].size();
+	reads = _breakpoints[static_cast<int>(BreakpointType::Read)].size();
+	writes = _breakpoints[static_cast<int>(BreakpointType::Write)].size();
+
+	if (breakpoints == NULL) {
+		return;
+	}
+
+	int offset = 0;
+	for (auto it = _breakpoints[static_cast<int>(BreakpointType::Execute)].cbegin(); it != _breakpoints[static_cast<int>(BreakpointType::Execute)].cend(); it++) {
+		breakpoints[offset++] = it->second;
+	}
+
+	for (auto it = _breakpoints[static_cast<int>(BreakpointType::Read)].cbegin(); it != _breakpoints[static_cast<int>(BreakpointType::Read)].cend(); it++) {
+		breakpoints[offset++] = it->second;
+	}
+
+	for (auto it = _breakpoints[static_cast<int>(BreakpointType::Write)].cbegin(); it != _breakpoints[static_cast<int>(BreakpointType::Write)].cend(); it++) {
+		breakpoints[offset++] = it->second;
+	}
+}
+
 BreakpointType BreakpointManager::GetBreakpointType(MemoryOperationType type)
 {
 	switch(type) {

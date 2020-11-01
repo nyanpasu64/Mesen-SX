@@ -331,6 +331,7 @@ public:
 	void Exec();
 
 	CpuState GetState();
+	bool GetCpuProcFlag(ProcFlags::ProcFlags flag);
 	uint64_t GetCycleCount();
 
 	template<uint64_t value>
@@ -347,6 +348,7 @@ public:
 	void Serialize(Serializer &s) override;
 
 	void SetReg(CpuRegister reg, uint16_t value);
+	void SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set);
 
 #ifdef DUMMYCPU
 private:
