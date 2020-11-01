@@ -33,6 +33,7 @@ public:
 	BreakpointManager(Debugger *debugger, CpuType cpuType, IEventManager* eventManager = nullptr);
 
 	void SetBreakpoints(Breakpoint breakpoints[], uint32_t count);
+	void GetBreakpoints(Breakpoint* breakpoints, int& execs, int& reads, int& writes);
 	__forceinline int CheckBreakpoint(MemoryOperationInfo operationInfo, AddressInfo &address);
 };
 

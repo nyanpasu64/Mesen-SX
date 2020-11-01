@@ -134,6 +134,10 @@ void Cpu::SetReg(CpuRegister reg, uint16_t value)
 	}
 }
 
+bool Cpu::GetCpuProcFlag(ProcFlags::ProcFlags flag) {
+	return _state.PS & static_cast<uint8_t>(flag);
+}
+
 void Cpu::SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set)
 {
 	_state.PS = set ? (_state.PS | static_cast<uint8_t>(flag)) : (_state.PS & ~static_cast<uint8_t>(flag));
