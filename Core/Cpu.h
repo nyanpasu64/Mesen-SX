@@ -331,6 +331,7 @@ public:
 	void Exec();
 
 	CpuState GetState();
+	bool GetCpuProcFlag(ProcFlags::ProcFlags flag);
 	uint64_t GetCycleCount();
 
 	template<uint64_t value>

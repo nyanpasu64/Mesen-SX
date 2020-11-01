@@ -128,6 +128,7 @@ public:
 	void SleepUntilResume(BreakSource source, MemoryOperationInfo* operation = nullptr, int breakpointId = -1);
 
 	void GetState(DebugState& state, bool partialPpuState);
+	bool GetCpuProcFlag(ProcFlags::ProcFlags flag);
 
 	void SetCpuRegister(CpuRegister reg, uint16_t value);
 	void SetCpuProcFlag(ProcFlags::ProcFlags flag, bool set);
@@ -149,6 +150,7 @@ public:
 	void RebuildPrgCache(CpuType cpuType);
 
 	void SetBreakpoints(Breakpoint breakpoints[], uint32_t length);
+	void GetBreakpoints(CpuType cpuType, Breakpoint* breakpoints, int& execs, int& reads, int& writes);
 	
 	void Log(string message);
 	string GetLog();

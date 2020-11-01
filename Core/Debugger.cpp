@@ -511,6 +511,11 @@ void Debugger::GetState(DebugState &state, bool partialPpuState)
 	}
 }
 
+bool Debugger::GetCpuProcFlag(ProcFlags::ProcFlags flag)
+{
+	return _cpu->GetCpuProcFlag(flag);
+}
+
 void Debugger::SetCpuRegister(CpuRegister reg, uint16_t value)
 {
 	_cpu->SetReg(reg, value);
@@ -713,6 +718,39 @@ void Debugger::SetBreakpoints(Breakpoint breakpoints[], uint32_t length)
 	}
 	if(_gbDebugger) {
 		_gbDebugger->GetBreakpointManager()->SetBreakpoints(breakpoints, length);
+	}
+}
+
+void Debugger::GetBreakpoints(CpuType cpuType, Breakpoint* breakpoints, int& execs, int& reads, int& writes)
+{
+	switch (cpuType) {
+	case CpuType::Cpu: return _cpuDebugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+	case CpuType::Spc: return _spcDebugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+	case CpuType::Gsu: {
+		if (_gsuDebugger) {
+			return _gsuDebugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+		}
+	} break;
+	case CpuType::Sa1: {
+		if (_sa1Debugger) {
+			return _sa1Debugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+		}
+	} break;
+	case CpuType::NecDsp: {
+		if (_necDspDebugger) {
+			return _necDspDebugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+		}
+	} break;
+	case CpuType::Cx4: {
+		if (_cx4Debugger) {
+			return _cx4Debugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+		}
+	} break;
+	case CpuType::Gameboy: {
+		if (_gbDebugger) {
+			return _gbDebugger->GetBreakpointManager()->GetBreakpoints(breakpoints, reads, writes, execs);
+		}
+	} break;
 	}
 }
 
