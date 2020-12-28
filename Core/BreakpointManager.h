@@ -3,6 +3,7 @@
 #include "Breakpoint.h"
 #include "DebugTypes.h"
 #include "DebugUtilities.h"
+#include "ExpressionEvaluator.h"
 
 class ExpressionEvaluator;
 class Debugger;
