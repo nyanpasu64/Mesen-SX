@@ -9,9 +9,8 @@ WaveRecorder::WaveRecorder(string outputFile, uint32_t sampleRate, bool isStereo
 	_streamSize = 0;
 	_sampleRate = sampleRate;
 	_isStereo = isStereo;
-
-	if (_stream)
-	{
+	
+	if(_stream) {
 		WriteHeader();
 		MessageManager::DisplayMessage("SoundRecorder", "SoundRecorderStarted", _outputFile);
 	}
@@ -53,16 +52,13 @@ void WaveRecorder::WriteHeader()
 	_stream.write((char*)&size, sizeof(size));
 }
 
-bool WaveRecorder::WriteSamples(int16_t* samples, uint32_t sampleCount, uint32_t sampleRate, bool isStereo)
+bool WaveRecorder::WriteSamples(int16_t * samples, uint32_t sampleCount, uint32_t sampleRate, bool isStereo)
 {
-	if (_sampleRate != sampleRate || _isStereo != isStereo)
-	{
+	if(_sampleRate != sampleRate || _isStereo != isStereo) {
 		//Format changed, stop recording
 		CloseFile();
 		return false;
-	}
-	else
-	{
+	} else {
 		uint32_t sampleBytes = sampleCount * (isStereo ? 4 : 2);
 		_stream.write((char*)samples, sampleBytes);
 		_streamSize += sampleBytes;
@@ -82,8 +78,7 @@ void WaveRecorder::UpdateSizeValues()
 
 void WaveRecorder::CloseFile()
 {
-	if (_stream && _stream.is_open())
-	{
+	if(_stream && _stream.is_open()) {
 		UpdateSizeValues();
 		_stream.close();
 

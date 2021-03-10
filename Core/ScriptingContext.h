@@ -48,16 +48,12 @@ protected:
 	vector<MemoryCallback> _callbacks[3];
 	vector<int> _eventCallbacks[(int)EventType::EventTypeSize];
 
-	virtual void InternalCallMemoryCallback(uint32_t addr, uint8_t& value, CallbackType type, CpuType cpuType) = 0;
+	virtual void InternalCallMemoryCallback(uint32_t addr, uint8_t &value, CallbackType type, CpuType cpuType) = 0;
 	virtual int InternalCallEventCallback(EventType type) = 0;
 
 public:
 	ScriptingContext(Debugger* debugger);
-
-	virtual ~ScriptingContext()
-	{
-	}
-
+	virtual ~ScriptingContext() {}
 	virtual bool LoadScript(string scriptName, string scriptContent, Debugger* debugger) = 0;
 
 	void Log(string message);
@@ -75,13 +71,13 @@ public:
 	void ClearSavestateData(int slot);
 	bool ProcessSavestate();
 
-	void CallMemoryCallback(uint32_t addr, uint8_t& value, CallbackType type, CpuType cpuType);
+	void CallMemoryCallback(uint32_t addr, uint8_t &value, CallbackType type, CpuType cpuType);
 	int CallEventCallback(EventType type);
 	bool CheckInitDone();
 	bool CheckInStartFrameEvent();
 	bool CheckInExecOpEvent();
 	bool CheckStateLoadedFlag();
-
+	
 	void RegisterMemoryCallback(CallbackType type, int startAddr, int endAddr, CpuType cpuType, int reference);
 	virtual void UnregisterMemoryCallback(CallbackType type, int startAddr, int endAddr, CpuType cpuType, int reference);
 	void RegisterEventCallback(EventType type, int reference);

@@ -11,15 +11,13 @@ private:
 	string _disconnectMessage;
 
 protected:
-	void Serialize(Serializer& s) override
+	void Serialize(Serializer &s) override
 	{
 		s.Stream(_disconnectMessage);
 	}
 
 public:
-	ForceDisconnectMessage(void* buffer, uint32_t length) : NetMessage(buffer, length)
-	{
-	}
+	ForceDisconnectMessage(void* buffer, uint32_t length) : NetMessage(buffer, length) { }
 
 	ForceDisconnectMessage(string message) : NetMessage(MessageType::ForceDisconnect)
 	{

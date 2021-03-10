@@ -11,9 +11,7 @@ public:
 	string PlayerName;
 	bool Spectator;
 
-	ClientConnectionData()
-	{
-	}
+	ClientConnectionData() {}
 
 	ClientConnectionData(string host, uint16_t port, string password, string playerName, bool spectator) :
 		Host(host), Port(port), Password(password), PlayerName(playerName), Spectator(spectator)

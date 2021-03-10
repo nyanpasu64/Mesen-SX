@@ -12,8 +12,7 @@ GifRecorder::~GifRecorder()
 	StopRecording();
 }
 
-bool GifRecorder::StartRecording(string filename, uint32_t width, uint32_t height, uint32_t bpp,
-                                 uint32_t audioSampleRate, double fps)
+bool GifRecorder::StartRecording(string filename, uint32_t width, uint32_t height, uint32_t bpp, uint32_t audioSampleRate, double fps)
 {
 	_outputFile = filename;
 	_recording = GifBegin(_gif.get(), filename.c_str(), width, height, 2, 8, false);
@@ -23,8 +22,7 @@ bool GifRecorder::StartRecording(string filename, uint32_t width, uint32_t heigh
 
 void GifRecorder::StopRecording()
 {
-	if (_recording)
-	{
+	if(_recording) {
 		GifEnd(_gif.get());
 	}
 }
@@ -32,9 +30,8 @@ void GifRecorder::StopRecording()
 void GifRecorder::AddFrame(void* frameBuffer, uint32_t width, uint32_t height, double fps)
 {
 	_frameCounter++;
-
-	if (fps < 55 || (_frameCounter % 6) != 0)
-	{
+	
+	if(fps < 55 || (_frameCounter % 6) != 0) {
 		//At 60 FPS, skip 1 of every 6 frames (max FPS for GIFs is 50fps)
 		GifWriteFrame(_gif.get(), (uint8_t*)frameBuffer, width, height, 2, 8, false);
 	}

@@ -30,20 +30,18 @@ public:
 	}
 
 	// Inherited via IRenderingDevice
-	virtual void UpdateFrame(void* frameBuffer, uint32_t width, uint32_t height) override
+	virtual void UpdateFrame(void *frameBuffer, uint32_t width, uint32_t height) override
 	{
-		if (!_skipMode && _sendFrame)
-		{
+		if(!_skipMode && _sendFrame) {
 			//Use Blargg's NTSC filter's max size as a minimum resolution, to prevent changing resolution too often
 			int32_t newWidth = std::max<int32_t>(width, SNES_NTSC_OUT_WIDTH(256));
 			int32_t newHeight = std::max<int32_t>(height, 239 * 2);
-			if (_retroEnv != nullptr && (_previousWidth != newWidth || _previousHeight != newHeight))
-			{
+			if(_retroEnv != nullptr && (_previousWidth != newWidth || _previousHeight != newHeight)) {
 				//Resolution change is needed
 				retro_system_av_info avInfo = {};
 				GetSystemAudioVideoInfo(avInfo, newWidth, newHeight);
 				_retroEnv(RETRO_ENVIRONMENT_SET_SYSTEM_AV_INFO, &avInfo);
-
+				
 				_previousWidth = newWidth;
 				_previousHeight = newHeight;
 			}
@@ -51,14 +49,12 @@ public:
 			_sendFrame(frameBuffer, width, height, sizeof(uint32_t) * width);
 		}
 	}
-
-	void GetSystemAudioVideoInfo(retro_system_av_info& info, int32_t maxWidth = 0, int32_t maxHeight = 0)
+	
+	void GetSystemAudioVideoInfo(retro_system_av_info &info, int32_t maxWidth = 0, int32_t maxHeight = 0)
 	{
 		AudioConfig audio = _console->GetSettings()->GetAudioConfig();
-
-		info.timing.fps = _console->GetRegion() == ConsoleRegion::Ntsc
-			                  ? 60.098811862348404716732985230828
-			                  : 50.006977968268290848936010226333;
+		
+		info.timing.fps = _console->GetRegion() == ConsoleRegion::Ntsc ? 60.098811862348404716732985230828 : 50.006977968268290848936010226333;
 		info.timing.sample_rate = audio.SampleRate;
 
 		OverscanDimensions overscan = _console->GetSettings()->GetOverscan();
@@ -66,22 +62,15 @@ public:
 		int height = (239 - overscan.Top - overscan.Bottom);
 
 		double aspectRatio = _console->GetSettings()->GetAspectRatio(_console->GetRegion());
-		if (aspectRatio != 0.0)
-		{
+		if(aspectRatio != 0.0) {
 			VideoAspectRatio aspect = _console->GetSettings()->GetVideoConfig().AspectRatio;
-			bool usePar = aspect == VideoAspectRatio::NTSC || aspect == VideoAspectRatio::PAL || aspect ==
-				VideoAspectRatio::Auto;
-			if (usePar)
-			{
+			bool usePar = aspect == VideoAspectRatio::NTSC || aspect == VideoAspectRatio::PAL || aspect == VideoAspectRatio::Auto;
+			if(usePar) {
 				info.geometry.aspect_ratio = (float)(width * aspectRatio / height);
-			}
-			else
-			{
+			} else {
 				info.geometry.aspect_ratio = (float)aspectRatio;
 			}
-		}
-		else
-		{
+		} else {
 			info.geometry.aspect_ratio = (float)width / height;
 		}
 
@@ -91,8 +80,7 @@ public:
 		info.geometry.max_width = maxWidth;
 		info.geometry.max_height = maxHeight;
 
-		if (maxHeight > 0 && maxWidth > 0)
-		{
+		if(maxHeight > 0 && maxWidth > 0) {
 			_previousWidth = maxWidth;
 			_previousHeight = maxHeight;
 		}
@@ -107,7 +95,7 @@ public:
 	{
 		_skipMode = skip;
 	}
-
+	
 	virtual void Render() override
 	{
 	}
@@ -116,8 +104,7 @@ public:
 	{
 	}
 
-	virtual void SetFullscreenMode(bool fullscreen, void* windowHandle, uint32_t monitorWidth,
-	                               uint32_t monitorHeight) override
+	virtual void SetFullscreenMode(bool fullscreen, void *windowHandle, uint32_t monitorWidth, uint32_t monitorHeight) override
 	{
 	}
 };

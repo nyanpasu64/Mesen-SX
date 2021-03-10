@@ -10,8 +10,7 @@ class ZipReader;
 class Console;
 struct CheatCode;
 
-class MesenMovie : public IMovie, public INotificationListener, public IBatteryProvider,
-                   public std::enable_shared_from_this<MesenMovie>
+class MesenMovie : public IMovie, public INotificationListener, public IBatteryProvider, public std::enable_shared_from_this<MesenMovie>
 {
 private:
 	shared_ptr<Console> _console;
@@ -29,23 +28,23 @@ private:
 	bool _forTest;
 
 private:
-	void ParseSettings(stringstream& data);
+	void ParseSettings(stringstream &data);
 	void ApplySettings();
 	bool LoadGame();
 	void Stop();
 
-	uint32_t LoadInt(std::unordered_map<string, string>& settings, string name, uint32_t defaultValue = 0);
-	bool LoadBool(std::unordered_map<string, string>& settings, string name);
-	string LoadString(std::unordered_map<string, string>& settings, string name);
+	uint32_t LoadInt(std::unordered_map<string, string> &settings, string name, uint32_t defaultValue = 0);
+	bool LoadBool(std::unordered_map<string, string> &settings, string name);
+	string LoadString(std::unordered_map<string, string> &settings, string name);
 
 	void LoadCheats();
-	bool LoadCheat(string cheatData, CheatCode& code);
+	bool LoadCheat(string cheatData, CheatCode &code);
 
 public:
 	MesenMovie(shared_ptr<Console> console, bool silent);
 	virtual ~MesenMovie();
 
-	bool Play(VirtualFile& file) override;
+	bool Play(VirtualFile &file) override;
 	bool SetInput(BaseControlDevice* device) override;
 	bool IsPlaying() override;
 
@@ -53,5 +52,5 @@ public:
 	vector<uint8_t> LoadBattery(string extension) override;
 
 	//Inherited via INotificationListener
-	void ProcessNotification(ConsoleNotificationType type, void* parameter) override;
+	void ProcessNotification(ConsoleNotificationType type, void * parameter) override;
 };

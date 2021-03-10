@@ -226,9 +226,8 @@ LUAMOD_API int luaopen_bit32 (lua_State *L) {
 #else					/* }{ */
 
 
-LUAMOD_API int luaopen_bit32(lua_State* L)
-{
-	return luaL_error(L, "library 'bit32' has been deprecated");
+LUAMOD_API int luaopen_bit32 (lua_State *L) {
+  return luaL_error(L, "library 'bit32' has been deprecated");
 }
 
 #endif					/* } */

@@ -23,9 +23,7 @@ struct MouseMovement
 class IKeyManager
 {
 public:
-	virtual ~IKeyManager()
-	{
-	}
+	virtual ~IKeyManager() {}
 
 	virtual void RefreshState() = 0;
 	virtual void UpdateDevices() = 0;
