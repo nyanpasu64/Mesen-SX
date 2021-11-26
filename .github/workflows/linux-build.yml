@@ -1,20 +1,28 @@
 name: "Linux build"
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
-  win-build:
+  linux-build:
     runs-on: ubuntu-latest
+    container: ubuntu:bionic
     steps:
       - uses: actions/checkout@v2
       - name: Set up dependencies
         run: |
-          sudo apt-get -qq update
-          sudo apt-get install -yq libsdl2-dev mono-devel
+          apt-get update
+          apt-get install -yq --no-install-recommends gnupg ca-certificates
+          apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+          echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" | tee /etc/apt/sources.list.d/mono-official-stable.list
+          apt-get update
+          apt-get install -yq --no-install-recommends g++ gcc zip unzip mono-devel libsdl2-dev libsdl2-2.0 gnome-themes-standard xvfb x11-apps
+          apt-get clean && rm -rf /var/cache/apt/lists/*
       - name: Build
         run: |
-          make
-      # - name: Upload binary
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: Mesen-S-win
-      #     path: bin/Any CPU/Release/Mesen-S.exe
+          make -j$(nproc) USE_GCC=true
+      - name: Upload binary
+        uses: actions/upload-artifact@v1
+        with:
+          name: Mesen-S-Linux
+          path: bin/x64/Release/Mesen-S.exe
