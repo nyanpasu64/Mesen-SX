@@ -10,9 +10,9 @@ This allows the debugger to know which portions of the ROM correspond to which f
 
 ## Integration with assemblers ##
 
-Mesen-S includes built-in support for a number of different debug symbol formats. Various assemblers produce debug symbol files which Mesen-S can read in order to provide additional information while debugging. This can include label names, source views and more, depending of the format.
+Mesen-S includes built-in support for a number of different debug symbol formats. These can be imported to provide additional information during debugging, such as label names, source views and more, depending on the symbols format.
 
-To import a debug symbol file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window. You can also enable the `Automatically load debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any debug symbols file it finds next to the ROM whenever the debugger is opened.  
+To import a debug symbols file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window. You can also enable the `Automatically load debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any debug symbols file it finds next to the ROM whenever the debugger is opened.  
 **Note:** For this option to work, the ROM file must have the same name as the symbols file (e.g `MyRom.sfc` and `MyRom.dbg`) and be inside the same folder.
 
 The `Automatically load debug symbols` option prioritizes debug symbol files in the following order:
@@ -30,20 +30,22 @@ When loading a `.sym` file, Mesen-S automatically tries to guess the type of `.s
 	<span>Source View</span>
 </div></div>
 
-When certain types of debug symbol files are loaded, an additional option appears in the code window's right-click menu:
+When certain types of symbol files are loaded, an additional option appears in the code window's right-click menu:
 
 * **Switch to Source View**: This turns on `Source View` mode, which allows you to debug the game using the original code files, rather than the disassembly.  This can be used for both assembly and C projects.
 
 ### CC65 / CA65 ###
-
-CC65/CA65 are able to produce `.dbg` files which can be imported into Mesen-S' debugger.  
+ 
+Integration with CC65/CA65 is possible via `.dbg` files.
 To make CC65/CA65 create a `.dbg` file during the compilation, use the `--dbgfile` command line option.
 
-Mesen-S supports the Source View option for `.dbg` files.
+Source View is supported for `.dbg` files.
 
 ### WLA-DX ###
 
 Integration with WLA-DX is possible via `.sym` files.
+
+Source View is supported for WLA-DX `.sym` files.
 
 ### bass ###
 
@@ -102,5 +104,5 @@ GBREG: Game Boy Register labels
 	<span>Integration Settings</span>
 </div></div>
 
-For fine-grain control over the DBG/MSL file imports, the `Integration Settings` ( **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>**) window can be used.  
-This allows you to configure which types of labels/comments should be imported, as well as choosing whether or not Mesen-S should delete all existing labels before importing DBG/MSL files.
+For fine-grain control over the debug symbol file imports, the `Integration Settings` ( **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>**) window can be used.  
+This allows you to configure which types of labels/comments should be imported, as well as choosing whether or not Mesen-S should delete all existing labels before importing debug symbol files.

@@ -160,7 +160,13 @@ namespace Mesen.GUI.Debugger.Workspace
 			string symContent = File.ReadAllText(symPath);
 			if(symContent.Contains("[labels]")) {
 				//Assume WLA-DX symbol files
-				new WlaDxImporter().Import(symPath, silent);
+				_symbolProvider = null;
+				_symbolProvider = new WlaDxImporter();
+				(_symbolProvider as WlaDxImporter).Import(symPath, silent);
+				SymbolProviderChanged?.Invoke(_symbolProvider);
+				LabelManager.RefreshLabels();
+
+				SymbolProviderChanged?.Invoke(_symbolProvider);
 			} else {
 				RomInfo romInfo = EmuApi.GetRomInfo();
 				if(romInfo.CoprocessorType == CoprocessorType.Gameboy || romInfo.CoprocessorType == CoprocessorType.SGB) {
@@ -172,8 +178,8 @@ namespace Mesen.GUI.Debugger.Workspace
 				} else {
 					BassLabelFile.Import(symPath, silent);
 				}
+				LabelManager.RefreshLabels();
 			}
-			LabelManager.RefreshLabels();
 		}
 
 		public static void ImportDbgFile(string dbgPath, bool silent = false)

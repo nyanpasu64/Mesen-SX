@@ -12,7 +12,6 @@ namespace Mesen.GUI.Debugger.Integration
 		List<SourceFileInfo> SourceFiles { get; }
 
 		AddressInfo? GetLineAddress(SourceFileInfo file, int lineIndex);
-		string GetSourceCodeLine(int prgRomAddress);
 		SourceCodeLocation GetSourceCodeLineInfo(AddressInfo address);
 		AddressInfo? GetSymbolAddressInfo(SourceSymbol symbol);
 		SourceCodeLocation GetSymbolDefinition(SourceSymbol symbol);
