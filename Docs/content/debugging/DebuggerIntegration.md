@@ -12,10 +12,10 @@ This allows the debugger to know which portions of the ROM correspond to which f
 
 Mesen-S includes built-in support for a number of different debug symbol formats. These can be imported to provide additional information during debugging, such as label names, source views and more, depending on the symbols format.
 
-To import a debug symbols file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window. You can also enable the `Automatically load debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any debug symbols file it finds next to the ROM whenever the debugger is opened.  
+To import a debug symbol file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window. You can also enable the `Automatically load debug symbol files` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any debug symbol file it finds next to the ROM whenever the debugger is opened.  
 **Note:** For this option to work, the ROM file must have the same name as the symbols file (e.g `MyRom.sfc` and `MyRom.dbg`) and be inside the same folder.
 
-The `Automatically load debug symbols` option prioritizes debug symbol files in the following order:
+The `Automatically load debug symbol files` option prioritizes debug symbol files in the following order:
 
 1. `.dbg` files
 2. `.msl` files
