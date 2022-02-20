@@ -1,5 +1,6 @@
 #pragma once 
 #include "stdafx.h"
+#include <mutex>
 #include <thread>
 
 class SimpleLock;
@@ -16,11 +17,7 @@ public:
 class SimpleLock
 {
 private:
-	thread_local static std::thread::id _threadID;
-
-	std::thread::id _holderThreadID;
-	uint32_t _lockCount;
-	atomic_flag _lock;
+	std::recursive_mutex _mutex;
 
 public:
 	SimpleLock();
@@ -29,7 +26,6 @@ public:
 	LockHandler AcquireSafe();
 
 	void Acquire();
-	bool IsFree();
 	void WaitForRelease();
 	void Release();
 };
