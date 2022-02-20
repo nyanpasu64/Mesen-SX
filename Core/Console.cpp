@@ -41,6 +41,7 @@
 #include "../Utilities/VirtualFile.h"
 #include "../Utilities/PlatformUtilities.h"
 #include "../Utilities/FolderUtilities.h"
+#include <unistd.h>
 
 Console::Console()
 {
@@ -405,8 +406,8 @@ bool Console::LoadRom(VirtualFile romFile, VirtualFile patchFile, bool stopRom, 
 		
 		_cart = cart;
 		
-		fprintf(stderr, "thread %zx LoadRom locking _debuggerLock %p\n",
-			std::hash<std::thread::id>()(std::this_thread::get_id()), &_debuggerLock
+		fprintf(stderr, "thread %d LoadRom locking _debuggerLock %p\n",
+			gettid(), &_debuggerLock
 		);
 		auto lock = _debuggerLock.AcquireSafe();
 		if(_debugger) {
@@ -479,8 +480,8 @@ bool Console::LoadRom(VirtualFile romFile, VirtualFile patchFile, bool stopRom, 
 		}
 		result = true;
 
-		fprintf(stderr, "thread %zx LoadRom unlocking _debuggerLock %p\n",
-			std::hash<std::thread::id>()(std::this_thread::get_id()), &_debuggerLock
+		fprintf(stderr, "thread %d LoadRom unlocking _debuggerLock %p\n",
+			gettid(), &_debuggerLock
 		);
 	} else {
 		MessageManager::DisplayMessage("Error", "CouldNotLoadFile", romFile.GetFileName());
@@ -869,8 +870,8 @@ shared_ptr<Debugger> Console::GetDebugger(bool autoStart)
 	shared_ptr<Debugger> debugger = _debugger;
 	if(!debugger && autoStart) {
 		//Lock to make sure we don't try to start debuggers in 2 separate threads at once
-		fprintf(stderr, "thread %zx GetDebugger locking _debuggerLock %p\n",
-			std::hash<std::thread::id>()(std::this_thread::get_id()), &_debuggerLock
+		fprintf(stderr, "thread %d GetDebugger locking _debuggerLock %p\n",
+			gettid(), &_debuggerLock
 		);
 		auto lock = _debuggerLock.AcquireSafe();
 		debugger = _debugger;
@@ -878,8 +879,8 @@ shared_ptr<Debugger> Console::GetDebugger(bool autoStart)
 			debugger.reset(new Debugger(shared_from_this()));
 			_debugger = debugger;
 		}
-		fprintf(stderr, "thread %zx GetDebugger unlocking _debuggerLock %p\n",
-			std::hash<std::thread::id>()(std::this_thread::get_id()), &_debuggerLock
+		fprintf(stderr, "thread %d GetDebugger unlocking _debuggerLock %p\n",
+			gettid(), &_debuggerLock
 		);
 	}
 	return debugger;
