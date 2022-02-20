@@ -244,6 +244,13 @@ namespace Mesen.GUI.Debugger.Controls
 			if(prgAddress >= 0) {
 				ScrollToAddress((uint)prgAddress);
 			}
+
+			if (_inSourceView) {
+				mnuSwitchView.Text = "Switch to Disassembly View";
+			}
+			else { 
+				mnuSwitchView.Text = "Switch to Source View";
+			}
 		}
 
 		public void SetActiveAddress(int? address)

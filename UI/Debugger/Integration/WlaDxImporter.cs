@@ -16,6 +16,9 @@ namespace Mesen.GUI.Debugger.Integration
 		private Dictionary<int, SourceFileInfo> _sourceFiles = new Dictionary<int, SourceFileInfo>();
 		private Dictionary<string, AddressInfo> _addressByLine = new Dictionary<string, AddressInfo>();
 		private Dictionary<string, SourceCodeLocation> _linesByAddress = new Dictionary<string, SourceCodeLocation>();
+		private Dictionary<string, CodeLabel> _labelDefinitions = new Dictionary<string, CodeLabel>();
+		private List<SourceSymbol> _sourceSymbols = new List<SourceSymbol>();
+		private Dictionary<string, int> _labelNamesToSourceSymbols = new Dictionary<string, int>();
 
 		public DateTime SymbolFileStamp { get; private set; }
 		public string SymbolPath { get; private set; }
@@ -31,11 +34,6 @@ namespace Mesen.GUI.Debugger.Integration
 			return null;
 		}
 
-		public string GetSourceCodeLine(int prgRomAddress)
-		{
-			throw new NotImplementedException();
-		}
-
 		public SourceCodeLocation GetSourceCodeLineInfo(AddressInfo address)
 		{
 			string key = address.Type.ToString() + address.Address.ToString();
@@ -48,26 +46,49 @@ namespace Mesen.GUI.Debugger.Integration
 
 		public SourceSymbol GetSymbol(string word, int prgStartAddress, int prgEndAddress)
 		{
+			{
+				CodeLabel label;
+
+				// If we get a direct full match here, we're golden.
+				if (_labelDefinitions.TryGetValue(word, out label) && _labelNamesToSourceSymbols.ContainsKey(label.Label)) {
+					return _sourceSymbols[_labelNamesToSourceSymbols[label.Label]];
+				}
+			}
+
+			// This fallback here is a hack, mostly to support labels with scopes/namespaces from Asar.
+			// At this time, the WLA-DX format doesn't support scopes in any way, which makes this impossible to support properly.
+			// If the format ever gets updated accordingly, this hack should disappear, and proper scope-based lookup should be implemented.
+			foreach (KeyValuePair<string, CodeLabel> label in _labelDefinitions)
+			{
+				if (label.Key.EndsWith("_" + word) && _labelNamesToSourceSymbols.ContainsKey(label.Value.Label)) {
+					return _sourceSymbols[_labelNamesToSourceSymbols[label.Value.Label]];
+				}
+			}
+
 			return null;
 		}
 
 		public AddressInfo? GetSymbolAddressInfo(SourceSymbol symbol)
 		{
-			return null;
+			AddressInfo absAddress = (symbol.InternalSymbol as CodeLabel).GetAbsoluteAddress();
+			return absAddress;
 		}
 
 		public SourceCodeLocation GetSymbolDefinition(SourceSymbol symbol)
 		{
+			// Currently not supported by WLA-DX format at all.
 			return null;
 		}
 
 		public List<SourceSymbol> GetSymbols()
 		{
-			return new List<SourceSymbol>();
+			return _sourceSymbols;
 		}
 
 		public int GetSymbolSize(SourceSymbol srcSymbol)
 		{
+			// Currently only supported indirectly by WLA-DX format.
+			// Not quite sure if worth implementing at this point in time.
 			return 1;
 		}
 
@@ -79,8 +100,6 @@ namespace Mesen.GUI.Debugger.Integration
 			Regex labelRegex = new Regex(@"^([0-9a-fA-F]{2,4}):([0-9a-fA-F]{4}) ([^\s]*)", RegexOptions.Compiled);
 			Regex fileRegex = new Regex(@"^([0-9a-fA-F]{4}) ([0-9a-fA-F]{8}) (.*)", RegexOptions.Compiled);
 			Regex addrRegex = new Regex(@"^([0-9a-fA-F]{2,4}):([0-9a-fA-F]{4}) ([0-9a-fA-F]{4}):([0-9a-fA-F]{8})", RegexOptions.Compiled);
-
-			Dictionary<string, CodeLabel> labels = new Dictionary<string, CodeLabel>();
 
 			bool isGameboy = EmuApi.GetRomInfo().CoprocessorType == CoprocessorType.Gameboy;
 
@@ -121,12 +140,12 @@ namespace Mesen.GUI.Debugger.Integration
 
 								string orgLabel = label;
 								int j = 1;
-								while(labels.ContainsKey(label)) {
+								while(_labelDefinitions.ContainsKey(label)) {
 									label = orgLabel + j.ToString();
 									j++;
 								}
 
-								labels[label] = new CodeLabel() {
+								_labelDefinitions[label] = new CodeLabel() {
 									Label = label,
 									Address = (UInt32)absAddr.Address,
 									MemoryType = absAddr.Type,
@@ -134,6 +153,9 @@ namespace Mesen.GUI.Debugger.Integration
 									Flags = CodeLabelFlags.None,
 									Length = 1
 								};
+
+								_sourceSymbols.Add(new SourceSymbol() { Name = label, Address = absAddr.Address, InternalSymbol = _labelDefinitions[label] });
+								_labelNamesToSourceSymbols[label] = _sourceSymbols.Count - 1;
 							}
 						} else {
 							break;
@@ -169,12 +191,16 @@ namespace Mesen.GUI.Debugger.Integration
 								int fileId = Int32.Parse(m.Groups[3].Value, System.Globalization.NumberStyles.HexNumber);
 								int lineNumber = Int32.Parse(m.Groups[4].Value, System.Globalization.NumberStyles.HexNumber);
 
-								if(lineNumber <= 1) {
-									//Ignore line number 0 and 1, seems like bad data?
+								if(lineNumber <= 0) {
+									//Ignore line number 0, seems like bad data?
+									//Line numbers in WLA symbol files should be 1-based.
 									continue;
 								}
 
-								AddressInfo absAddr = new AddressInfo() { Address = addr, Type = SnesMemoryType.PrgRom };
+								lineNumber -= 1;
+
+								AddressInfo relAddr = new AddressInfo() { Address = addr, Type = SnesMemoryType.CpuMemory };
+								AddressInfo absAddr = DebugApi.GetAbsoluteAddress(relAddr);
 								_addressByLine[_sourceFiles[fileId].Name + "_" + lineNumber.ToString()] = absAddr;
 								_linesByAddress[absAddr.Type.ToString() + absAddr.Address.ToString()] = new SourceCodeLocation() { File = _sourceFiles[fileId], LineNumber = lineNumber };
 							}
@@ -185,7 +211,7 @@ namespace Mesen.GUI.Debugger.Integration
 				}
 			}
 
-			LabelManager.SetLabels(labels.Values, true);
+			LabelManager.SetLabels(_labelDefinitions.Values, true);
 		}
 	}
 }
