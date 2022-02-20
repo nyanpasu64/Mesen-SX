@@ -8,7 +8,7 @@ class SimpleLock;
 class LockHandler
 {
 private:
-	SimpleLock *_lock;
+	std::unique_lock<std::recursive_mutex> _lock;
 public:
 	LockHandler(SimpleLock *lock);
 	~LockHandler();
@@ -18,6 +18,8 @@ class SimpleLock
 {
 private:
 	std::recursive_mutex _mutex;
+
+	friend class LockHandler;
 
 public:
 	SimpleLock();

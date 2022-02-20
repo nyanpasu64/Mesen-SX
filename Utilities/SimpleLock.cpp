@@ -34,12 +34,10 @@ void SimpleLock::Release()
 
 
 LockHandler::LockHandler(SimpleLock *lock)
+	: _lock(lock->_mutex)
 {
-	_lock = lock;
-	_lock->Acquire();
 }
 
 LockHandler::~LockHandler()
 {
-	_lock->Release();
 }
