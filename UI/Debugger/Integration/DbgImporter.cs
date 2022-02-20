@@ -100,26 +100,6 @@ namespace Mesen.GUI.Debugger.Integration
 			return null;
 		}
 
-		public string GetSourceCodeLine(int prgRomAddress)
-		{
-			if(prgRomAddress >= 0) {
-				try {
-					SourceCodeLocation line;
-					if(_linesByPrgAddress.TryGetValue(prgRomAddress, out line)) {
-						string output = "";
-						SourceFileInfo file = line.File;
-						if(file.Data == null) {
-							return string.Empty;
-						}
-
-						output += file.Data[line.LineNumber];
-						return output;
-					}
-				} catch { }
-			}
-			return null;
-		}
-
 		private SourceCodeLocation GetReferenceInfo(int referenceId)
 		{
 			FileInfo file;

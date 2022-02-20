@@ -20,16 +20,10 @@ To import the .DBG file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</
 You can also enable the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any .DBG file it finds next to the ROM whenever the debugger is opened.  
 **Note:** For this option to work, the ROM file must have the same name as the DBG file (e.g `MyRom.sfc` and `MyRom.dbg`) and be inside the same folder.
 
-#### Source View ####
+### WLA-DX ###
 
-<div class="imgBox"><div>
-	<img src="/images/SourceView.png" />
-	<span>Source View</span>
-</div></div>
-
-When a .DBG file is loaded, an additional option appears in the code window's right-click menu:
-
-* **Switch to Source View**: This turns on `Source View` mode, which allows you to debug the game using the original code files, rather than the disassembly.  This can be used for both assembly and C projects.
+Integration with WLA-DX is possible via `.sym` files.
+When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** is enabled, the debugger will automatically attempt to load `.sym` files with the same name as the ROM (e.g `MyRom.sfc` and `MyRom.sym`)
 
 ### bass ###
 
@@ -40,6 +34,19 @@ When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;I
 
 Integration with RGBDS (for Game Boy projects) is possible via the `.sym` files that RGBDS produces.
 When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** is enabled, the debugger will automatically attempt to load `.sym` files with the same name as the ROM (e.g `MyRom.sfc` and `MyRom.sym`)
+
+#### Source View ####
+
+<div class="imgBox"><div>
+	<img src="/images/SourceView.png" />
+	<span>Source View</span>
+</div></div>
+
+When certain types of symbol files are loaded, an additional option appears in the code window's right-click menu:
+
+* **Switch to Source View**: This turns on `Source View` mode, which allows you to debug the game using the original code files, rather than the disassembly.  This can be used for both assembly and C projects.
+
+Currently, this feature is supported for .DBG files and WLA-DX .SYM files.
 
 ## Importing and exporting labels ##
 
