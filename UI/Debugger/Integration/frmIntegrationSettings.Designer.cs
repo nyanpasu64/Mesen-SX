@@ -13,7 +13,8 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if(disposing && (components != null)) {
+			if (disposing && (components != null))
+			{
 				components.Dispose();
 			}
 			base.Dispose(disposing);
@@ -27,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.grpSPC = new System.Windows.Forms.GroupBox();
 			this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -42,6 +44,7 @@
 			this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
 			this.chkResetLabelsOnImport = new System.Windows.Forms.CheckBox();
 			this.chkAutoLoadFiles = new System.Windows.Forms.CheckBox();
+			this.toolTipAutoLoadFiles = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.grpSPC.SuspendLayout();
 			this.tableLayoutPanel3.SuspendLayout();
@@ -239,10 +242,20 @@
 			this.chkAutoLoadFiles.AutoSize = true;
 			this.chkAutoLoadFiles.Location = new System.Drawing.Point(3, 3);
 			this.chkAutoLoadFiles.Name = "chkAutoLoadFiles";
-			this.chkAutoLoadFiles.Size = new System.Drawing.Size(433, 17);
+			this.chkAutoLoadFiles.Size = new System.Drawing.Size(200, 17);
 			this.chkAutoLoadFiles.TabIndex = 3;
-			this.chkAutoLoadFiles.Text = "Automatically load DBG/MSL debug symbols when debugger opens or on power cycle";
+			this.chkAutoLoadFiles.Text = "Automatically load debug symbol files";
+			this.toolTipAutoLoadFiles.SetToolTip(this.chkAutoLoadFiles, "Automatically tries to load [rom_name].dbg, [rom_name].msl or [rom_name].sym debu" +
+	  "g symbol files (prioritized in that order) when the debugger opens or on power c" +
+	  "ycle.");
 			this.chkAutoLoadFiles.UseVisualStyleBackColor = true;
+			// 
+			// toolTipAutoLoadFiles
+			// 
+			this.toolTipAutoLoadFiles.AutoPopDelay = 20000;
+			this.toolTipAutoLoadFiles.InitialDelay = 500;
+			this.toolTipAutoLoadFiles.ReshowDelay = 100;
+			this.toolTipAutoLoadFiles.ToolTipTitle = "Automatically load debug symbol files";
 			// 
 			// frmIntegrationSettings
 			// 
@@ -287,5 +300,6 @@
 		private System.Windows.Forms.CheckBox chkSpcComments;
 		private System.Windows.Forms.CheckBox chkSpcRam;
 		private System.Windows.Forms.CheckBox chkAutoLoadFiles;
+		private System.Windows.Forms.ToolTip toolTipAutoLoadFiles;
 	}
 }

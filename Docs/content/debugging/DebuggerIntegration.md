@@ -10,30 +10,18 @@ This allows the debugger to know which portions of the ROM correspond to which f
 
 ## Integration with assemblers ##
 
-### CC65 / CA65 ###
+Mesen-S includes built-in support for a number of different debug symbol formats. These can be imported to provide additional information during debugging, such as label names, source views and more, depending on the symbols format.
 
-CC65/CA65 are able to produce .DBG files which can be imported into Mesen-S' debugger.  
-To make CC65/CA65 create a .DBG file during the compilation, use the `--dbgfile` command line option.
+To import a debug symbol file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window. You can also enable the `Automatically load debug symbol files` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any debug symbol file it finds next to the ROM whenever the debugger is opened.  
+**Note:** For this option to work, the ROM file must have the same name as the symbols file (e.g `MyRom.sfc` and `MyRom.dbg`) and be inside the same folder.
 
-To import the .DBG file, use the **<kbd>File&rarr;Workspace&rarr;Import Labels</kbd>** command in the debugger window.  
+The `Automatically load debug symbol files` option prioritizes debug symbol files in the following order:
 
-You can also enable the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** to make Mesen-S load any .DBG file it finds next to the ROM whenever the debugger is opened.  
-**Note:** For this option to work, the ROM file must have the same name as the DBG file (e.g `MyRom.sfc` and `MyRom.dbg`) and be inside the same folder.
+1. `.dbg` files
+2. `.msl` files
+2. `.sym` files
 
-### WLA-DX ###
-
-Integration with WLA-DX is possible via `.sym` files.
-When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** is enabled, the debugger will automatically attempt to load `.sym` files with the same name as the ROM (e.g `MyRom.sfc` and `MyRom.sym`)
-
-### bass ###
-
-Integration with bass is possible via `.sym` files.
-When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** is enabled, the debugger will automatically attempt to load `.sym` files with the same name as the ROM (e.g `MyRom.sfc` and `MyRom.sym`)
-
-### RGBDS ###
-
-Integration with RGBDS (for Game Boy projects) is possible via the `.sym` files that RGBDS produces.
-When the `Automatically load DBG/MSL debug symbols` option in **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>** is enabled, the debugger will automatically attempt to load `.sym` files with the same name as the ROM (e.g `MyRom.sfc` and `MyRom.sym`)
+When loading a `.sym` file, Mesen-S automatically tries to guess the type of `.sym` file based on its contents.
 
 #### Source View ####
 
@@ -46,7 +34,26 @@ When certain types of symbol files are loaded, an additional option appears in t
 
 * **Switch to Source View**: This turns on `Source View` mode, which allows you to debug the game using the original code files, rather than the disassembly.  This can be used for both assembly and C projects.
 
-Currently, this feature is supported for .DBG files and WLA-DX .SYM files.
+### CC65 / CA65 ###
+ 
+Integration with CC65/CA65 is possible via `.dbg` files.
+To make CC65/CA65 create a `.dbg` file during the compilation, use the `--dbgfile` command line option.
+
+Source View is supported for `.dbg` files.
+
+### WLA-DX ###
+
+Integration with WLA-DX is possible via `.sym` files.
+
+Source View is supported for WLA-DX `.sym` files.
+
+### bass ###
+
+Integration with bass is possible via `.sym` files.
+
+### RGBDS ###
+
+Integration with RGBDS (for Game Boy projects) is possible via the `.sym` files that RGBDS produces.
 
 ## Importing and exporting labels ##
 
@@ -97,5 +104,5 @@ GBREG: Game Boy Register labels
 	<span>Integration Settings</span>
 </div></div>
 
-For fine-grain control over the DBG/MSL file imports, the `Integration Settings` ( **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>**) window can be used.  
-This allows you to configure which types of labels/comments should be imported, as well as choosing whether or not Mesen-S should delete all existing labels before importing DBG/MSL files.
+For fine-grain control over the debug symbol file imports, the `Integration Settings` ( **<kbd>File&rarr;Import/Export&rarr;Integration Settings</kbd>**) window can be used.  
+This allows you to configure which types of labels/comments should be imported, as well as choosing whether or not Mesen-S should delete all existing labels before importing debug symbol files.
