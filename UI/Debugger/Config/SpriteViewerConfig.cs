@@ -25,6 +25,8 @@ namespace Mesen.GUI.Config
 		public bool HideOffscreenSprites = false;
 		public int RefreshScanline = 240;
 		public int RefreshCycle = 0;
+		public int[] CustomBackgroundColors = {};
+		public int CurrentCustomBackgroundColor = Color.FromArgb( 255, 128, 128, 128 ).ToArgb();
 
 		public RefreshSpeed AutoRefreshSpeed = RefreshSpeed.Low;
 

@@ -110,7 +110,7 @@ void PpuTools::GetTileView(GetTileViewOptions options, uint8_t *source, uint32_t
 		for(int column = 0; column < options.Width; column++) {
 			uint32_t addr = baseOffset + bytesPerTile * column;
 
-			int baseOutputOffset;				
+			int baseOutputOffset;
 			if(options.Layout == TileLayout::SingleLine8x16) {
 				int displayColumn = column / 2 + ((row & 0x01) ? options.Width/2 : 0);
 				int displayRow = (row & ~0x01) + ((column & 0x01) ? 1 : 0);
@@ -257,7 +257,12 @@ static constexpr uint8_t _oamSizes[8][2][2] = {
 	{ { 2, 4 }, { 4, 4 } }  //16x32 + 32x32
 };
 
-void PpuTools::GetSpritePreview(GetSpritePreviewOptions options, PpuState state, uint8_t *vram, uint8_t *oamRam, uint8_t *cgram, uint32_t *outBuffer)
+void PpuTools::GetSpritePreview(GetSpritePreviewOptions options, PpuState state, uint8_t* vram, uint8_t* oamRam, uint8_t* cgram, uint32_t *outBuffer)
+{
+	GetSpritePreviewWithBackgroundColor(options, state, vram, oamRam, cgram, 0xFF888888, outBuffer);
+}
+
+void PpuTools::GetSpritePreviewWithBackgroundColor(GetSpritePreviewOptions options, PpuState state, uint8_t* vram, uint8_t* oamRam, uint8_t* cgram, uint32_t backgroundColor, uint32_t *outBuffer)
 {
 	//TODO
 	//uint16_t baseAddr = state.EnableOamPriority ? (_internalOamAddress & 0x1FC) : 0;
@@ -265,7 +270,7 @@ void PpuTools::GetSpritePreview(GetSpritePreviewOptions options, PpuState state,
 
 	bool filled[256 * 240] = {};
 	int lastScanline = state.OverscanMode ? 239 : 224;
-	std::fill(outBuffer, outBuffer + 256 * lastScanline, 0xFF888888);
+	std::fill(outBuffer, outBuffer + 256 * lastScanline, backgroundColor);
 	std::fill(outBuffer + 256 * lastScanline, outBuffer + 256 * 240, 0xFF000000);
 
 	for(int screenY = 0; screenY < lastScanline; screenY++) {
@@ -306,7 +311,7 @@ void PpuTools::GetSpritePreview(GetSpritePreviewOptions options, PpuState state,
 			//uint8_t priority = (flags >> 4) & 0x03;
 			bool horizontalMirror = (flags & 0x40) != 0;
 			bool verticalMirror = (flags & 0x80) != 0;
-			
+
 			uint8_t yOffset;
 			int rowOffset;
 

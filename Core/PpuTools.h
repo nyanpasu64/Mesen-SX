@@ -33,10 +33,11 @@ public:
 	void GetTileView(GetTileViewOptions options, uint8_t *source, uint32_t srcSize, uint8_t *cgram, uint32_t *outBuffer);
 	void GetTilemap(GetTilemapOptions options, PpuState state, uint8_t* vram, uint8_t* cgram, uint32_t *outBuffer);
 	void GetSpritePreview(GetSpritePreviewOptions options, PpuState state, uint8_t* vram, uint8_t* oamRam, uint8_t* cgram, uint32_t *outBuffer);
+	void GetSpritePreviewWithBackgroundColor(GetSpritePreviewOptions options, PpuState state, uint8_t* vram, uint8_t* oamRam, uint8_t* cgram, uint32_t backgroundColor, uint32_t *outBuffer);
 
 	void SetViewerUpdateTiming(uint32_t viewerId, uint16_t scanline, uint16_t cycle, CpuType cpuType);
 	void RemoveViewer(uint32_t viewerId);
-	
+
 	__forceinline void UpdateViewers(uint16_t scanline, uint16_t cycle, CpuType cpuType)
 	{
 		if(_updateTimings.size() > 0) {

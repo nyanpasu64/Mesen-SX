@@ -22,11 +22,13 @@ namespace Mesen.GUI.Debugger
 		private byte[] _vram;
 		private byte[] _cgram;
 		private byte[] _oamRam;
+		private int    _backgroundColor;
+		// private Color  _backgroundColor = Color.Red;
 		private byte[] _previewData;
 		private Bitmap _previewImage;
 		private GetSpritePreviewOptions _options = new GetSpritePreviewOptions();
 		private WindowRefreshManager _refreshManager;
-		
+
 		public CpuType CpuType { get; private set; }
 		public ctrlScanlineCycleSelect ScanlineCycleSelect { get { return this.ctrlScanlineCycleSelect; } }
 
@@ -49,6 +51,7 @@ namespace Mesen.GUI.Debugger
 			InitShortcuts();
 
 			SpriteViewerConfig config = ConfigManager.Config.Debug.SpriteViewer;
+		 	this._backgroundColor = config.CurrentCustomBackgroundColor;
 			RestoreLocation(config.WindowLocation, config.WindowSize);
 
 			_refreshManager = new WindowRefreshManager(this);
@@ -107,7 +110,7 @@ namespace Mesen.GUI.Debugger
 			_oamRam = DebugApi.GetMemoryState(this.CpuType == CpuType.Gameboy ? SnesMemoryType.GbSpriteRam : SnesMemoryType.SpriteRam);
 			_cgram = DebugApi.GetMemoryState(SnesMemoryType.CGRam);
 		}
-		
+
 		public void RefreshViewer()
 		{
 			int height = this.CpuType == CpuType.Gameboy ? 256 : 240;
@@ -123,7 +126,7 @@ namespace Mesen.GUI.Debugger
 			if(this.CpuType == CpuType.Gameboy) {
 				DebugApi.GetGameboySpritePreview(_options, _state.Gameboy.Ppu, _vram, _oamRam, _previewData);
 			} else {
-				DebugApi.GetSpritePreview(_options, _state.Ppu, _vram, _oamRam, _cgram, _previewData);
+				DebugApi.GetSpritePreviewWithBackgroundColor(_options, _state.Ppu, _vram, _oamRam, _cgram, _backgroundColor, _previewData);
 			}
 
 			using(Graphics g = Graphics.FromImage(_previewImage)) {
@@ -230,6 +233,26 @@ namespace Mesen.GUI.Debugger
 			mnuAutoRefreshLow.Checked = _refreshManager.AutoRefreshSpeed == RefreshSpeed.Low;
 			mnuAutoRefreshNormal.Checked = _refreshManager.AutoRefreshSpeed == RefreshSpeed.Normal;
 			mnuAutoRefreshHigh.Checked = _refreshManager.AutoRefreshSpeed == RefreshSpeed.High;
+		}
+
+	 	private void UpdateBackgroundColor(object sender, EventArgs e)
+	  	{
+			// Load configs to extract background colors
+			SpriteViewerConfig config = ConfigManager.Config.Debug.SpriteViewer;
+			int[] CustomBackgroundColors = config.CustomBackgroundColors;
+
+			ColorDialog colorDialog = new ColorDialog();
+			colorDialog.AllowFullOpen = true;
+			colorDialog.AnyColor = true;
+			colorDialog.ShowHelp = false;
+			colorDialog.CustomColors = CustomBackgroundColors;
+
+			// Update the background color if the user clicks OK
+			if(colorDialog.ShowDialog() == DialogResult.OK)
+			{
+				config.CurrentCustomBackgroundColor = _backgroundColor = colorDialog.Color.ToArgb();
+				config.CustomBackgroundColors = colorDialog.CustomColors;
+			}
 		}
 	}
 }
