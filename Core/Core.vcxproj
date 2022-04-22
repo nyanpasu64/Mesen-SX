@@ -381,6 +381,9 @@
     <ClCompile Include="VideoRenderer.cpp" />
     <ClCompile Include="WaveRecorder.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{78FEF1A1-6DF1-4CBB-A373-AE6FA7CE5CE0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
