@@ -104,6 +104,7 @@ namespace Mesen.GUI
 		[DllImport(DllPath)] public static extern void GetTilemap(GetTilemapOptions options, PpuState state, byte[] vram, byte[] cgram, [In, Out] byte[] buffer);
 		[DllImport(DllPath)] public static extern void GetTileView(GetTileViewOptions options, byte[] source, int srcSize, byte[] cgram, [In, Out] byte[] buffer);
 		[DllImport(DllPath)] public static extern void GetSpritePreview(GetSpritePreviewOptions options, PpuState state, byte[] vram, byte[] oamRam, byte[] cgram, [In, Out] byte[] buffer);
+		[DllImport(DllPath)] public static extern void GetSpritePreviewWithBackgroundColor(GetSpritePreviewOptions options, PpuState state, byte[] vram, byte[] oamRam, byte[] cgram, int backgroundColor, [In, Out] byte[] buffer);
 
 		[DllImport(DllPath)] public static extern void GetGameboyTilemap(byte[] vram, GbPpuState state, UInt16 offset, [In, Out] byte[] buffer);
 		[DllImport(DllPath)] public static extern void GetGameboySpritePreview(GetSpritePreviewOptions options, GbPpuState state, byte[] vram, byte[] oamRam, [In, Out] byte[] buffer);
@@ -127,7 +128,7 @@ namespace Mesen.GUI
 		}
 
 		[DllImport(DllPath)] public static extern void GetEventViewerEvent(CpuType cpuType, ref DebugEventInfo evtInfo, UInt16 scanline, UInt16 cycle, EventViewerDisplayOptions options);
-		[DllImport(DllPath)] public static extern UInt32 TakeEventSnapshot(CpuType cpuType, EventViewerDisplayOptions options);		
+		[DllImport(DllPath)] public static extern UInt32 TakeEventSnapshot(CpuType cpuType, EventViewerDisplayOptions options);
 
 		[DllImport(DllPath, EntryPoint = "GetEventViewerOutput")] private static extern void GetEventViewerOutputWrapper(CpuType cpuType, [In, Out]byte[] buffer, UInt32 bufferSize, EventViewerDisplayOptions options);
 		public static byte[] GetEventViewerOutput(CpuType cpuType, int scanlineWidth, UInt32 scanlineCount, EventViewerDisplayOptions options)
@@ -556,7 +557,7 @@ namespace Mesen.GUI
 		DivideBy0 = 3,
 		OutOfScope = 4
 	}
-	
+
 	public struct StackFrameInfo
 	{
 		public UInt32 Source;
@@ -572,7 +573,7 @@ namespace Mesen.GUI
 		Nmi = 1,
 		Irq = 2
 	}
-	
+
 	public enum CpuType : byte
 	{
 		Cpu,
@@ -639,7 +640,7 @@ namespace Mesen.GUI
 		BreakOnWdm = 5,
 		BreakOnStp = 6,
 		BreakOnUninitMemoryRead = 7,
-		
+
 		GbInvalidOamAccess = 8,
 		GbInvalidVramAccess = 9,
 		GbDisableLcdOutsideVblank = 10,
