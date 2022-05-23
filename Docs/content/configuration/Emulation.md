@@ -52,7 +52,7 @@ When developing software for the SNES, enabling these options can help you catch
 
 **Randomize power-on state**: When enabled, various chips (PPU, etc.) often have a random state at power-on and need to be fully initialized before being used. This option causes their power on state to be random, forcing the program to initialize them to run properly.
 
-**Use strict board mappings**: When enabled, this option turns on stricter board mappings for some cartridges. Currently, this only affects CX4 games.
+**Use strict board mappings**: When enabled, this option turns on stricter board mappings for some cartridges. Currently, this only affects CX4 and SPC7110 games.
 
 
 ## Overclocking ##
